@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// エネミーのステータス管理
+/// </summary>
 public class Enemy : MonoBehaviour
 {
     [Header("ステータス")]
