@@ -5,6 +5,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    private Player _player;
+    private Enemy _enemy;
+    private InGamePhase _gamePhase;
+    private SceneDivision _currentScene;
     private void Awake()
     {
         Application.targetFrameRate = 100;
@@ -15,6 +19,9 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        _player = FindAnyObjectByType<Player>();
+        _enemy = FindAnyObjectByType<Enemy>();
     }
 
 
