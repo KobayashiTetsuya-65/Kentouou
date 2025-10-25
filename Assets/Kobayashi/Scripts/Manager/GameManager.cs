@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         _uiManager = FindAnyObjectByType<UIManager>();
 
         ChangePhase(InGamePhase.Start);
-        _uiManager.InGameStart(false);
+        _uiManager.ResetState();
     }
 
 
@@ -47,10 +47,11 @@ public class GameManager : MonoBehaviour
                         {
                             _gamePhase = InGamePhase.CountDown;
                             _uiManager.InGameStart(true);
+                            StartCoroutine(_uiManager.CountDown());
                         }
                         break;
                     case InGamePhase.CountDown:
-
+                        //UIManagerの方でカウントダウン処理
                     break;
                     case InGamePhase.Chose:
 

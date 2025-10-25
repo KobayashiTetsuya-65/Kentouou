@@ -1,5 +1,8 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,16 +14,20 @@ public class UIManager : MonoBehaviour
     [Tooltip("エネミー"),SerializeField] private Image _enemyImage;
     [Header("パネル")]
     [Tooltip("スタートパネル"),SerializeField] private GameObject _startPanel;
+    [Tooltip("カウントダウンパネル"), SerializeField] private GameObject _countDownPanel;
     [Tooltip("敵弱点パネル"),SerializeField] private GameObject _weakPointPanelE;
     [SerializeField] private RectTransform _weakPanelErtr;
     [Tooltip("自分弱点パネル"),SerializeField] private GameObject _weakPointPanelP;
     [SerializeField] private RectTransform _weakPanelPrtr;
     [Header("弱点")]
     [Tooltip("弱点画像"), SerializeField] private GameObject _weakPointPrefab;
+    [Header("カウントダウンテキスト")]
+    [SerializeField] private TextMeshProUGUI[] _countDownTexts;
+    [SerializeField] private float _countDuration = 0.7f;
+    [SerializeField] private float _maxScale = 2.5f;
     private RectTransform _weakRect;
     private GameObject _weakPoint;
     private float _width, _height, _randomX, _randomY;
-    private bool _chose = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,6 +41,12 @@ public class UIManager : MonoBehaviour
     {
         _playerHP.value = 1;
         _enemeyHP.value = 1;
+        InGameStart(false);
+        _countDownPanel.SetActive(false);
+        foreach(var count in _countDownTexts)
+        {
+            count.gameObject.SetActive(false);
+        }
     }
     /// <summary>
     /// 弱点を生成
@@ -58,12 +71,39 @@ public class UIManager : MonoBehaviour
         _weakRect = _weakPoint.GetComponent<RectTransform>();
         _weakRect.anchoredPosition = new Vector2(_randomX, _randomY);
     }
+    /// <summary>
+    /// 準備パネルの表示
+    /// </summary>
+    /// <param name="isClicked"></param>
     public void InGameStart(bool isClicked)
     {
         _startPanel.SetActive(!isClicked);
     }
-    private void Attack()
+    /// <summary>
+    /// カウントダウン
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CountDown()
     {
-        Debug.Log("攻撃");
+        _countDownPanel.SetActive(true);
+        yield return null;
+        for(int i = 0; i < _countDownTexts.Length;i++)
+        {
+            if(i != 0)
+            {
+                _countDownTexts[i - 1].gameObject.SetActive(false);
+            }
+            _countDownTexts[i].gameObject.SetActive(true);
+            if (i == _countDownTexts.Length - 1)
+            {
+                _countDuration *= 1.5f;
+                _countDownTexts[i].rectTransform.localScale = Vector3.zero;
+                _countDownTexts[i].rectTransform.DOScale(_maxScale, _countDuration);
+            }
+            yield return new WaitForSeconds(_countDuration);
+        }
+        _countDownTexts[_countDownTexts.Length - 1].gameObject.SetActive(false);
+        _countDownPanel.SetActive(false);
+        GameManager.Instance._gamePhase = InGamePhase.Chose;
     }
 }
