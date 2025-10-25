@@ -4,7 +4,7 @@ using UnityEngine;
 public class TextFadeLoop : MonoBehaviour
 {
     [SerializeField] private CanvasGroup _canvasGroup;
-    [SerializeField] private float _fadeDuration = 1.5f;
+    [Tooltip("‚©‚©‚éŽžŠÔ"),SerializeField] private float _fadeDuration = 1.5f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
