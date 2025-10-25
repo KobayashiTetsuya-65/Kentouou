@@ -26,7 +26,8 @@ public class GameManager : MonoBehaviour
         _enemy = FindAnyObjectByType<Enemy>();
         _uiManager = FindAnyObjectByType<UIManager>();
 
-        ChangePhase(InGamePhase.Chose);
+        ChangePhase(InGamePhase.Start);
+        _uiManager.InGameStart(false);
     }
 
 
@@ -41,18 +42,18 @@ public class GameManager : MonoBehaviour
             case SceneDivision.InGame://インゲームシーンで実行したいこと
                 switch (_gamePhase)
                 {
+                    case InGamePhase.Start:
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            _gamePhase = InGamePhase.CountDown;
+                            _uiManager.InGameStart(true);
+                        }
+                        break;
                     case InGamePhase.CountDown:
 
                     break;
                     case InGamePhase.Chose:
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            _uiManager.SpawnWeakPoint(true);
-                        }
-                        if (Input.GetMouseButtonDown(1))
-                        {
-                            _uiManager.SpawnWeakPoint(false);
-                        }
+
                     break;
                     case InGamePhase.Attack:
 

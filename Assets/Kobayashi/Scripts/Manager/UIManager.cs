@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [Tooltip("プレイヤー"),SerializeField] private Image _playerImage;
     [Tooltip("エネミー"),SerializeField] private Image _enemyImage;
     [Header("パネル")]
+    [Tooltip("スタートパネル"),SerializeField] private GameObject _startPanel;
     [Tooltip("敵弱点パネル"),SerializeField] private GameObject _weakPointPanelE;
     [SerializeField] private RectTransform _weakPanelErtr;
     [Tooltip("自分弱点パネル"),SerializeField] private GameObject _weakPointPanelP;
@@ -56,6 +57,10 @@ public class UIManager : MonoBehaviour
         _randomY = Random.Range(-_height / 2f, _height / 2f);
         _weakRect = _weakPoint.GetComponent<RectTransform>();
         _weakRect.anchoredPosition = new Vector2(_randomX, _randomY);
+    }
+    public void InGameStart(bool isClicked)
+    {
+        _startPanel.SetActive(!isClicked);
     }
     private void Attack()
     {
