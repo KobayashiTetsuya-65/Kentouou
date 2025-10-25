@@ -10,6 +10,11 @@ public class GameManager : MonoBehaviour
     private UIManager _uiManager;
     public InGamePhase _gamePhase;
     private SceneDivision _currentScene;
+    public bool Hit = false;
+    private bool _isWeakPont, _weakPoint = false, _enemyWeak;
+    public float Damege;
+    private float _point;
+    [Tooltip("敵に弱点が沸く確率"), SerializeField] private float _parcent = 0.9f;
     private void Awake()
     {
         Application.targetFrameRate = 100;
@@ -54,8 +59,31 @@ public class GameManager : MonoBehaviour
                         //UIManagerの方でカウントダウン処理
                     break;
                     case InGamePhase.Chose:
-
-                    break;
+                        if (Hit)
+                        {
+                            if (_enemyWeak)
+                            {
+                                _enemy.EnemyDamaged(Damege);
+                            }
+                            else
+                            {
+                                _player.PlayerDamaged(Damege);
+                            }
+                            Hit = false;
+                            _weakPoint = false;
+                            //_gamePhase = InGamePhase.Attack;
+                        }
+                        else
+                        {
+                            if (!_weakPoint)
+                            {
+                                _point = Random.Range(0, 1);
+                                _enemyWeak = _point <= _parcent;
+                                _uiManager.SpawnWeakPoint(_enemyWeak);
+                                _weakPoint = true;
+                            }
+                        }
+                            break;
                     case InGamePhase.Attack:
 
                     break;
