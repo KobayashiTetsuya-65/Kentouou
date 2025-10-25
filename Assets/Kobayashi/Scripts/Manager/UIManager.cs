@@ -58,12 +58,12 @@ public class UIManager : MonoBehaviour
         _weakRect = _weakPoint.GetComponent<RectTransform>();
         _weakRect.anchoredPosition = new Vector2(_randomX, _randomY);
     }
+    /// <summary>
+    /// €”õƒpƒlƒ‹‚Ì•\¦
+    /// </summary>
+    /// <param name="isClicked"></param>
     public void InGameStart(bool isClicked)
     {
         _startPanel.SetActive(!isClicked);
-    }
-    private void Attack()
-    {
-        Debug.Log("UŒ‚");
     }
 }
