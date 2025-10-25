@@ -24,7 +24,10 @@ public class GameManager : MonoBehaviour
         //後でswitchに入れてエラー対策行う
         _player = FindAnyObjectByType<Player>();
         _enemy = FindAnyObjectByType<Enemy>();
-        _uiManager = GetComponent<UIManager>();
+        _uiManager = FindAnyObjectByType<UIManager>();
+
+        ChangePhase(InGamePhase.Start);
+        _uiManager.InGameStart(false);
     }
 
 
@@ -39,6 +42,13 @@ public class GameManager : MonoBehaviour
             case SceneDivision.InGame://インゲームシーンで実行したいこと
                 switch (_gamePhase)
                 {
+                    case InGamePhase.Start:
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            _gamePhase = InGamePhase.CountDown;
+                            _uiManager.InGameStart(true);
+                        }
+                        break;
                     case InGamePhase.CountDown:
 
                     break;
@@ -54,5 +64,10 @@ public class GameManager : MonoBehaviour
 
             break;
         }
+    }
+    private void ChangePhase(InGamePhase phaseName)
+    {
+        _gamePhase = phaseName;
+        _currentScene = SceneDivision.InGame;
     }
 }

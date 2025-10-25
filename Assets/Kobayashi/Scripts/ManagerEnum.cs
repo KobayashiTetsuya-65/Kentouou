@@ -3,6 +3,7 @@
 /// </summary>
 public enum InGamePhase
 {
+    Start,
     CountDown,
     Chose,
     Attack
