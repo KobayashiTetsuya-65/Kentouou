@@ -69,7 +69,8 @@ public class GameManager : MonoBehaviour
                             }
                             else
                             {
-                                _player.PlayerDamaged(Damege);
+                                _enemy.EnemyDamaged(Damege);
+                                //_player.PlayerDamaged(Damege);
                             }
                             Hit = false;
                             _weakPoint = false;
@@ -88,7 +89,7 @@ public class GameManager : MonoBehaviour
                         {
                             if (!_weakPoint)
                             {
-                                _point = Random.Range(0, 1);
+                                _point = Random.Range(0f, 1f);
                                 _enemyWeak = _point <= _parcent;
                                 _uiManager.SpawnWeakPoint(_enemyWeak);
                                 _weakPoint = true;

@@ -2403,7 +2403,7 @@ MonoBehaviour:
   _gamePhase: 0
   Hit: 0
   Damege: 0
-  _parcent: 0.9
+  _parcent: 0.6
 --- !u!1 &1434695025
 GameObject:
   m_ObjectHideFlags: 0
