@@ -7,7 +7,7 @@ public class WeakPoint : MonoBehaviour,IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         GameManager.Instance.Hit = true;
-        GameManager.Instance.Damege = damage;
+        GameManager.Instance.Damage = damage;
         Destroy(gameObject);
     }
 }

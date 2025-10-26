@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     private SceneDivision _currentScene;
     public bool Hit = false;
     private bool _isWeakPont, _weakPoint = false, _enemyWeak;
-    public float Damege;
+    public float Damage;
     private float _point;
     [Tooltip("“G‚ÉŽã“_‚ª•¦‚­Šm—¦"), SerializeField] private float _parcent = 0.9f;
     private void Awake()
@@ -65,11 +65,12 @@ public class GameManager : MonoBehaviour
                         {
                             if (_enemyWeak)
                             {
-                                _enemy.EnemyDamaged(Damege);
+                                _enemy.EnemyDamaged(Damage);
                             }
                             else
                             {
-                                _player.PlayerDamaged(Damege);
+                                _enemy.EnemyDamaged(Damage);
+                                //_player.PlayerDamaged(Damege);
                             }
                             Hit = false;
                             _weakPoint = false;
@@ -88,7 +89,7 @@ public class GameManager : MonoBehaviour
                         {
                             if (!_weakPoint)
                             {
-                                _point = Random.Range(0, 1);
+                                _point = Random.Range(0f, 1f);
                                 _enemyWeak = _point <= _parcent;
                                 _uiManager.SpawnWeakPoint(_enemyWeak);
                                 _weakPoint = true;
