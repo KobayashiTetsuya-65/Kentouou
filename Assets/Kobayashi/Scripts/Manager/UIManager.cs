@@ -7,8 +7,8 @@ using DG.Tweening;
 public class UIManager : MonoBehaviour
 {
     [Header("HPゲージ")]
-    [Tooltip("プレイヤーHPゲージ"), SerializeField] private Slider _playerHP;
-    [Tooltip("エネミーHPゲージ"), SerializeField] private Slider _enemeyHP;
+    [Tooltip("プレイヤーHPゲージ"), SerializeField] private GameObject _playerHP;
+    [Tooltip("エネミーHPゲージ"), SerializeField] private GameObject _enemyHP;
     [Header("キャラクター")]
     [Tooltip("プレイヤー"),SerializeField] private Image _playerImage;
     [Tooltip("エネミー"),SerializeField] private Image _enemyImage;
@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] _countDownTexts;
     [SerializeField] private float _countDuration = 0.7f;
     [SerializeField] private float _maxScale = 2.5f;
+    private HPBarController _HPBarP, _HPBarE;
     private RectTransform _weakRect;
     private GameObject _weakPoint;
     private float _width, _height, _randomX, _randomY;
@@ -35,12 +36,14 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// UIの値をリセット
+    /// UIをリセット
     /// </summary>
      public void ResetState()
     {
-        _playerHP.value = 1;
-        _enemeyHP.value = 1;
+        _HPBarP = _playerHP.GetComponent<HPBarController>();
+        _HPBarE = _enemyHP.GetComponent<HPBarController>();
+        _HPBarP.HPBarReset();
+        _HPBarE.HPBarReset();
         InGameStart(false);
         _countDownPanel.SetActive(false);
         foreach(var count in _countDownTexts)
