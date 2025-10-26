@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
                         {
                             _gamePhase = InGamePhase.CountDown;
                             _uiManager.InGameStart(true);
+                            _player.PlayerStateReset();
+                            _enemy.EnemyStateReset();
                             StartCoroutine(_uiManager.CountDown());
                         }
                         break;
@@ -71,7 +73,16 @@ public class GameManager : MonoBehaviour
                             }
                             Hit = false;
                             _weakPoint = false;
-                            //_gamePhase = InGamePhase.Attack;
+                            if(_player.PlayerCurrentHP <= 0)
+                            {
+                                _gamePhase = InGamePhase.Start;
+                                _currentScene = SceneDivision.Result;
+                            }
+                            else if(_enemy.EnemyCurrentHP <= 0)
+                            {
+                                _gamePhase = InGamePhase.Start;
+                                _currentScene = SceneDivision.Result;
+                            }
                         }
                         else
                         {
@@ -90,7 +101,7 @@ public class GameManager : MonoBehaviour
                 }
             break;
             case SceneDivision.Result://ƒŠƒUƒ‹ƒgƒV[ƒ“‚ÅŽÀs‚µ‚½‚¢‚±‚Æ 
-
+                Debug.Log("Œ‹‰Ê”­•\`````");
             break;
         }
     }

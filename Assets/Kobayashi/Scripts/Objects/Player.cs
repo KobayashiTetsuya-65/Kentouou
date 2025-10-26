@@ -9,12 +9,12 @@ public class Player : MonoBehaviour
     [SerializeField] public float PlayerAttackP;
     [Header("HPゲージ")]
     [SerializeField] private GameObject _hp;
+    public float PlayerCurrentHP;
     private HPBarController _controller;
     private void Start()
     {
         _controller = _hp.GetComponent<HPBarController>();
     }
-    public float PlayerCurrentHP;
     /// <summary>
     /// プレイヤーのステータスをリセット
     /// </summary>
