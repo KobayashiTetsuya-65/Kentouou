@@ -7,7 +7,14 @@ public class Enemy : MonoBehaviour
     [Header("ステータス")]
     [SerializeField] public float EnemyMaxHP;
     [SerializeField] public float EnemyAttackP;
+    [Header("HPゲージ")]
+    [SerializeField] private GameObject _hp;
+    private HPBarController _controller;
     public float EnemyCurrentHP;
+    private void Start()
+    {
+        _controller = _hp.GetComponent<HPBarController>();
+    }
     /// <summary>
     /// エネミーのステータスリセット
     /// </summary>
@@ -23,5 +30,6 @@ public class Enemy : MonoBehaviour
     {
         EnemyCurrentHP -= damage;
         Debug.Log($"{damage}を与えた");
+        _controller.TakeDamage(damage);
     }
 }

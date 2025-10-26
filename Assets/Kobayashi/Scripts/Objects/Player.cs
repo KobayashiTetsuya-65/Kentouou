@@ -7,6 +7,13 @@ public class Player : MonoBehaviour
     [Header("ステータス")]
     [SerializeField] public float PlayerMaxHP;
     [SerializeField] public float PlayerAttackP;
+    [Header("HPゲージ")]
+    [SerializeField] private GameObject _hp;
+    private HPBarController _controller;
+    private void Start()
+    {
+        _controller = _hp.GetComponent<HPBarController>();
+    }
     public float PlayerCurrentHP;
     /// <summary>
     /// プレイヤーのステータスをリセット
@@ -23,6 +30,7 @@ public class Player : MonoBehaviour
     {
         PlayerCurrentHP -= damage;
         Debug.Log($"{damage}ダメージを受けた！");
+        _controller.TakeDamage( damage );
     }
 
 }
