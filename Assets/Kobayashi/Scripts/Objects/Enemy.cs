@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("ステータス")]
     [SerializeField] public float EnemyMaxHP;
-    [SerializeField] public float EnemyAttackP;
+
     [Header("HPゲージ")]
     [SerializeField] private GameObject _hp;
     private HPBarController _controller;

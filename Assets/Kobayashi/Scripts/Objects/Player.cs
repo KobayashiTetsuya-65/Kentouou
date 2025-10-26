@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     [Header("ステータス")]
     [SerializeField] public float PlayerMaxHP;
-    [SerializeField] public float PlayerAttackP;
+
     [Header("HPゲージ")]
     [SerializeField] private GameObject _hp;
     public float PlayerCurrentHP;
