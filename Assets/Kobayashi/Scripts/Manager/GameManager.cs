@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public InGamePhase _gamePhase;
     private SceneDivision _currentScene;
     public bool Hit = false;
+    public bool Miss = false;
     private bool _isWeakPont, _weakPoint = false, _enemyWeak;
     public float Damage;
     private float _point;
@@ -61,25 +62,12 @@ public class GameManager : MonoBehaviour
                         //UIManagerの方でカウントダウン処理
                     break;
                     case InGamePhase.Chose:
-                        if (Hit)
+                        if (Hit)//弱点攻撃時
                         {
-                            if (_enemyWeak)
-                            {
-                                _enemy.EnemyDamaged(Damage);
-                            }
-                            else
-                            {
-                                _enemy.EnemyDamaged(Damage);
-                                //_player.PlayerDamaged(Damege);
-                            }
+                            _enemy.EnemyDamaged(Damage);
                             Hit = false;
                             _weakPoint = false;
-                            if(_player.PlayerCurrentHP <= 0)
-                            {
-                                _gamePhase = InGamePhase.Start;
-                                _currentScene = SceneDivision.Result;
-                            }
-                            else if(_enemy.EnemyCurrentHP <= 0)
+                            if(_enemy.EnemyCurrentHP <= 0)//勝利時
                             {
                                 _gamePhase = InGamePhase.Start;
                                 _currentScene = SceneDivision.Result;
@@ -93,6 +81,18 @@ public class GameManager : MonoBehaviour
                                 _enemyWeak = _point <= _parcent;
                                 _uiManager.SpawnWeakPoint(_enemyWeak);
                                 _weakPoint = true;
+                            }
+                            if (Miss)//弱点外を感知
+                            {
+                                _player.PlayerDamaged(Damage);
+                                //弱点を壊す(後で追加)
+                                Miss = false;
+                                _weakPoint = false;
+                                if (_player.PlayerCurrentHP <= 0)//敗北時
+                                {
+                                    _gamePhase = InGamePhase.Start;
+                                    _currentScene = SceneDivision.Result;
+                                }
                             }
                         }
                             break;
