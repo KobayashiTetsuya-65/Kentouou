@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
     [Header("HPゲージ")]
     [Tooltip("プレイヤーHPゲージ"), SerializeField] private GameObject _playerHP;
     [Tooltip("エネミーHPゲージ"), SerializeField] private GameObject _enemyHP;
+    [Header("キャラクター座標")]
+    [Tooltip("プレイヤー"), SerializeField] private RectTransform _playerRectTr;
+    [Tooltip("エネミー"), SerializeField] private RectTransform _enemyRectTr;
     [Header("キャラクターイメージ")]
     [Tooltip("プレイヤー"),SerializeField] private Image _playerImage;
     [Tooltip("エネミー"),SerializeField] private Image _enemyImage;
@@ -35,6 +38,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private float _maxScale = 2.5f;
     private HPBarController _HPBarP, _HPBarE;
     private RectTransform _weakRect;
+    private Vector2 _idlePlayerAnchoredPos, _idleEnemyAnchoredPos;
     private GameObject _weakPoint;
     private Sprite _idleSpritePlayer,_idleSpriteEnemy;
     private float _width, _height, _randomX, _randomY;
@@ -121,19 +125,27 @@ public class UIManager : MonoBehaviour
     {
         _idleSpritePlayer = _playerImage.sprite;
         _idleSpriteEnemy = _enemyImage.sprite;
+        _idlePlayerAnchoredPos = _playerRectTr.anchoredPosition;
+        _idleEnemyAnchoredPos = _enemyRectTr.anchoredPosition;
         int n = Random.Range(0, 2);
         if (isPlayer)
         {
             _enemyImage.sprite = _damagedEnemySprite;
             _playerImage.sprite = _attackPlayerSprits[n];
+            _playerRectTr.anchoredPosition = Vector2.zero;
+            _playerRectTr.anchoredPosition += new Vector2(50, 0);
         }
         else
         {
             _playerImage.sprite = _damagedPlayerSprite;
             _enemyImage.sprite = _attackEnemySprits[n];
+            _enemyRectTr.anchoredPosition = Vector2.zero;
+            _enemyRectTr.anchoredPosition -= new Vector2(50, 0);
         }
         yield return new WaitForSeconds(_attackDuration);
         _playerImage.sprite = _idleSpritePlayer;
         _enemyImage.sprite = _idleSpriteEnemy;
+        _playerRectTr.anchoredPosition = _idlePlayerAnchoredPos;
+        _enemyRectTr.anchoredPosition = _idleEnemyAnchoredPos;
     }
 }

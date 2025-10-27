@@ -403,6 +403,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   _playerHP: {fileID: 699781869}
   _enemyHP: {fileID: 1838189656}
+  _playerRectTr: {fileID: 1206768149}
+  _enemyRectTr: {fileID: 482965107}
   _playerImage: {fileID: 1206768150}
   _enemyImage: {fileID: 482965108}
   _attackPlayerSprits:
