@@ -9,9 +9,14 @@ public class UIManager : MonoBehaviour
     [Header("HPゲージ")]
     [Tooltip("プレイヤーHPゲージ"), SerializeField] private GameObject _playerHP;
     [Tooltip("エネミーHPゲージ"), SerializeField] private GameObject _enemyHP;
-    [Header("キャラクター")]
+    [Header("キャラクターイメージ")]
     [Tooltip("プレイヤー"),SerializeField] private Image _playerImage;
     [Tooltip("エネミー"),SerializeField] private Image _enemyImage;
+    [Header("攻撃モーション")]
+    [Tooltip("プレイヤーの攻撃"), SerializeField] private Sprite[] _attackPlayerSprits;
+    [Tooltip("エネミーの攻撃"), SerializeField] private Sprite[] _attackEnemySprits;
+    [Header("数値設定")]
+    [Tooltip("攻撃アニメーションの間隔"), SerializeField] private float _attackDuration = 0.25f;
     [Header("パネル")]
     [Tooltip("スタートパネル"),SerializeField] private GameObject _startPanel;
     [Tooltip("カウントダウンパネル"), SerializeField] private GameObject _countDownPanel;
@@ -28,12 +33,8 @@ public class UIManager : MonoBehaviour
     private HPBarController _HPBarP, _HPBarE;
     private RectTransform _weakRect;
     private GameObject _weakPoint;
+    private Sprite _idleSprite;
     private float _width, _height, _randomX, _randomY;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
 
     /// <summary>
     /// UIをリセット
@@ -108,5 +109,27 @@ public class UIManager : MonoBehaviour
         _countDownTexts[_countDownTexts.Length - 1].gameObject.SetActive(false);
         _countDownPanel.SetActive(false);
         GameManager.Instance._gamePhase = InGamePhase.Chose;
+    }
+    /// <summary>
+    /// 攻撃時のSprite入れ替え
+    /// </summary>
+    /// <param name="isPlayer"></param>
+    public IEnumerator AttackMotion(bool isPlayer)
+    {
+        int n = Random.Range(0, 2);
+        if (isPlayer)
+        {
+            _idleSprite = _playerImage.sprite;
+            _playerImage.sprite = _attackPlayerSprits[n];
+            yield return new WaitForSeconds(_attackDuration);
+            _playerImage.sprite = _idleSprite;
+        }
+        else
+        {
+            _idleSprite = _enemyImage.sprite;
+            _enemyImage.sprite = _attackEnemySprits[n];
+            yield return new WaitForSeconds(_attackDuration);
+            _enemyImage.sprite = _idleSprite;
+        }
     }
 }
