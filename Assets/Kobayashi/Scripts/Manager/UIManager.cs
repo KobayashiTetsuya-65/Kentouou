@@ -15,6 +15,9 @@ public class UIManager : MonoBehaviour
     [Header("攻撃モーション")]
     [Tooltip("プレイヤーの攻撃"), SerializeField] private Sprite[] _attackPlayerSprits;
     [Tooltip("エネミーの攻撃"), SerializeField] private Sprite[] _attackEnemySprits;
+    [Header("被爆時の画像")]
+    [Tooltip("プレイヤー"), SerializeField] private Sprite _damagedPlayerSprite;
+    [Tooltip("エネミー"), SerializeField] private Sprite _damagedEnemySprite;
     [Header("数値設定")]
     [Tooltip("攻撃アニメーションの間隔"), SerializeField] private float _attackDuration = 0.25f;
     [Header("パネル")]
@@ -33,7 +36,7 @@ public class UIManager : MonoBehaviour
     private HPBarController _HPBarP, _HPBarE;
     private RectTransform _weakRect;
     private GameObject _weakPoint;
-    private Sprite _idleSprite;
+    private Sprite _idleSpritePlayer,_idleSpriteEnemy;
     private float _width, _height, _randomX, _randomY;
 
     /// <summary>
@@ -116,20 +119,21 @@ public class UIManager : MonoBehaviour
     /// <param name="isPlayer"></param>
     public IEnumerator AttackMotion(bool isPlayer)
     {
+        _idleSpritePlayer = _playerImage.sprite;
+        _idleSpriteEnemy = _enemyImage.sprite;
         int n = Random.Range(0, 2);
         if (isPlayer)
         {
-            _idleSprite = _playerImage.sprite;
+            _enemyImage.sprite = _damagedEnemySprite;
             _playerImage.sprite = _attackPlayerSprits[n];
-            yield return new WaitForSeconds(_attackDuration);
-            _playerImage.sprite = _idleSprite;
         }
         else
         {
-            _idleSprite = _enemyImage.sprite;
+            _playerImage.sprite = _damagedPlayerSprite;
             _enemyImage.sprite = _attackEnemySprits[n];
-            yield return new WaitForSeconds(_attackDuration);
-            _enemyImage.sprite = _idleSprite;
         }
+        yield return new WaitForSeconds(_attackDuration);
+        _playerImage.sprite = _idleSpritePlayer;
+        _enemyImage.sprite = _idleSpriteEnemy;
     }
 }
