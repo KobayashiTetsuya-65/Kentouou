@@ -9,9 +9,20 @@ public class UIManager : MonoBehaviour
     [Header("HPゲージ")]
     [Tooltip("プレイヤーHPゲージ"), SerializeField] private GameObject _playerHP;
     [Tooltip("エネミーHPゲージ"), SerializeField] private GameObject _enemyHP;
-    [Header("キャラクター")]
+    [Header("キャラクター座標")]
+    [Tooltip("プレイヤー"), SerializeField] private RectTransform _playerRectTr;
+    [Tooltip("エネミー"), SerializeField] private RectTransform _enemyRectTr;
+    [Header("キャラクターイメージ")]
     [Tooltip("プレイヤー"),SerializeField] private Image _playerImage;
     [Tooltip("エネミー"),SerializeField] private Image _enemyImage;
+    [Header("攻撃モーション")]
+    [Tooltip("プレイヤーの攻撃"), SerializeField] private Sprite[] _attackPlayerSprits;
+    [Tooltip("エネミーの攻撃"), SerializeField] private Sprite[] _attackEnemySprits;
+    [Header("被爆時の画像")]
+    [Tooltip("プレイヤー"), SerializeField] private Sprite _damagedPlayerSprite;
+    [Tooltip("エネミー"), SerializeField] private Sprite _damagedEnemySprite;
+    [Header("数値設定")]
+    [Tooltip("攻撃アニメーションの間隔"), SerializeField] private float _attackDuration = 0.25f;
     [Header("パネル")]
     [Tooltip("スタートパネル"),SerializeField] private GameObject _startPanel;
     [Tooltip("カウントダウンパネル"), SerializeField] private GameObject _countDownPanel;
@@ -27,13 +38,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private float _maxScale = 2.5f;
     private HPBarController _HPBarP, _HPBarE;
     private RectTransform _weakRect;
+    private Vector2 _idlePlayerAnchoredPos, _idleEnemyAnchoredPos;
     private GameObject _weakPoint;
+    private Sprite _idleSpritePlayer,_idleSpriteEnemy;
     private float _width, _height, _randomX, _randomY;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
 
     /// <summary>
     /// UIをリセット
@@ -108,5 +116,36 @@ public class UIManager : MonoBehaviour
         _countDownTexts[_countDownTexts.Length - 1].gameObject.SetActive(false);
         _countDownPanel.SetActive(false);
         GameManager.Instance._gamePhase = InGamePhase.Chose;
+    }
+    /// <summary>
+    /// 攻撃時のSprite入れ替え
+    /// </summary>
+    /// <param name="isPlayer"></param>
+    public IEnumerator AttackMotion(bool isPlayer)
+    {
+        _idleSpritePlayer = _playerImage.sprite;
+        _idleSpriteEnemy = _enemyImage.sprite;
+        _idlePlayerAnchoredPos = _playerRectTr.anchoredPosition;
+        _idleEnemyAnchoredPos = _enemyRectTr.anchoredPosition;
+        int n = Random.Range(0, 2);
+        if (isPlayer)
+        {
+            _enemyImage.sprite = _damagedEnemySprite;
+            _playerImage.sprite = _attackPlayerSprits[n];
+            _playerRectTr.anchoredPosition = Vector2.zero;
+            _playerRectTr.anchoredPosition += new Vector2(50, 0);
+        }
+        else
+        {
+            _playerImage.sprite = _damagedPlayerSprite;
+            _enemyImage.sprite = _attackEnemySprits[n];
+            _enemyRectTr.anchoredPosition = Vector2.zero;
+            _enemyRectTr.anchoredPosition -= new Vector2(50, 0);
+        }
+        yield return new WaitForSeconds(_attackDuration);
+        _playerImage.sprite = _idleSpritePlayer;
+        _enemyImage.sprite = _idleSpriteEnemy;
+        _playerRectTr.anchoredPosition = _idlePlayerAnchoredPos;
+        _enemyRectTr.anchoredPosition = _idleEnemyAnchoredPos;
     }
 }

@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
                     case InGamePhase.Chose:
                         if (Hit)//弱点攻撃時
                         {
+                            StartCoroutine(_uiManager.AttackMotion(Hit));
                             _enemy.EnemyDamaged(Damage);
                             Hit = false;
                             _weakPoint = false;
@@ -82,10 +83,10 @@ public class GameManager : MonoBehaviour
                                 _uiManager.SpawnWeakPoint(_enemyWeak);
                                 _weakPoint = true;
                             }
-                            if (Miss)//弱点外を感知
+                            if (Miss)//弱点外を検知
                             {
+                                StartCoroutine(_uiManager.AttackMotion(Hit));
                                 _player.PlayerDamaged(Damage);
-                                //弱点を壊す(後で追加)
                                 Miss = false;
                                 _weakPoint = false;
                                 if (_player.PlayerCurrentHP <= 0)//敗北時
