@@ -8,6 +8,11 @@ public class WeakPoint : MonoBehaviour,IPointerClickHandler
     {
         GameManager.Instance.Hit = true;
         GameManager.Instance.Damage = damage;
+        DestroyWeakPoint();
+    }
+    public void DestroyWeakPoint()
+    {
         Destroy(gameObject);
+        Debug.Log("é„ì_Ç™è¡Ç¶ÇΩÅI");
     }
 }
