@@ -36,7 +36,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] _countDownTexts;
     [SerializeField] private float _countDuration = 0.7f;
     [SerializeField] private float _maxScale = 2.5f;
-    private HPBarController _HPBarP, _HPBarE;
+    private HPBarController _HPBarE;
+    private Player _player;
     private RectTransform _weakRect;
     private Vector2 _idlePlayerAnchoredPos, _idleEnemyAnchoredPos;
     private GameObject _weakPoint;
@@ -48,9 +49,9 @@ public class UIManager : MonoBehaviour
     /// </summary>
      public void ResetState()
     {
-        _HPBarP = _playerHP.GetComponent<HPBarController>();
         _HPBarE = _enemyHP.GetComponent<HPBarController>();
-        _HPBarP.HPBarReset();
+        _player = _playerHP.GetComponent<Player>();
+        _player.PlayerStateReset();
         _HPBarE.HPBarReset();
         InGameStart(false);
         _countDownPanel.SetActive(false);
