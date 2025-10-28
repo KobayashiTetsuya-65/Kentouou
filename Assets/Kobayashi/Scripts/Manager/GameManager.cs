@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
     private SceneDivision _currentScene;
     public bool Hit = false;
     public bool Miss = false;
-    private bool _isWeakPont, _weakPoint = false, _enemyWeak;
+    private bool _weakPoint = false;
+    private bool _enemyWeak;
     public float Damage;
     private float _point;
     [Tooltip("“G‚ÉŽã“_‚ª•¦‚­Šm—¦"), SerializeField] private float _parcent = 0.9f;
@@ -66,6 +67,7 @@ public class GameManager : MonoBehaviour
                         {
                             StartCoroutine(_uiManager.AttackMotion(Hit));
                             _enemy.EnemyDamaged(Damage);
+                            _uiManager.TimerChecker(true);
                             Hit = false;
                             _weakPoint = false;
                             if(_enemy.EnemyCurrentHP <= 0)//Ÿ—˜Žž
@@ -76,7 +78,11 @@ public class GameManager : MonoBehaviour
                         }
                         else
                         {
-                            if (!_weakPoint)
+                            if (_weakPoint)
+                            {
+                                _uiManager.TimerChecker(false);
+                            }
+                            else
                             {
                                 _point = Random.Range(0f, 1f);
                                 _enemyWeak = _point <= _parcent;
@@ -87,6 +93,7 @@ public class GameManager : MonoBehaviour
                             {
                                 StartCoroutine(_uiManager.AttackMotion(Hit));
                                 _player.PlayerDamaged(1);
+                                _uiManager.TimerChecker(true);
                                 Miss = false;
                                 _weakPoint = false;
                                 if (_player.PlayerCurrentHP <= 0)//”s–kŽž
