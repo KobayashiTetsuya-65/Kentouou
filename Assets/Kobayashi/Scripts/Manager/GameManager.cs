@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
                             if (Miss)//Žã“_ŠO‚ðŒŸ’m
                             {
                                 StartCoroutine(_uiManager.AttackMotion(Hit));
-                                _player.PlayerDamaged(Damage);
+                                _player.PlayerDamaged(1);
                                 Miss = false;
                                 _weakPoint = false;
                                 if (_player.PlayerCurrentHP <= 0)//”s–kŽž
