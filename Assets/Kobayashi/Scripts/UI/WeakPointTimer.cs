@@ -12,7 +12,7 @@ public class WeakPointTimer : MonoBehaviour
     {
         StartTimer();
     }
-    public void StartTimer()
+    private void StartTimer()
     {
         _gaugeImage.fillAmount = 1f;
         _gaugeImage.DOFillAmount(0f, _duration)
