@@ -1,19 +1,20 @@
 using UnityEngine;
+using UnityEngine.UI;
 /// <summary>
 /// プレイヤーのステータス管理
 /// </summary>
 public class Player : MonoBehaviour
 {
     [Header("ステータス")]
-    [SerializeField] public float PlayerMaxHP;
+    [SerializeField] public int PlayerMaxHP;
 
     [Header("HPゲージ")]
-    [SerializeField] private GameObject _hp;
-    public float PlayerCurrentHP;
-    private HPBarController _controller;
+    [SerializeField] private Image[] _hps;
+    public int PlayerCurrentHP;
+    
     private void Start()
     {
-        _controller = _hp.GetComponent<HPBarController>();
+        
     }
     /// <summary>
     /// プレイヤーのステータスをリセット
@@ -26,11 +27,18 @@ public class Player : MonoBehaviour
     /// プレイヤーがダメージを受ける
     /// </summary>
     /// <param name="damage"></param>
-    public void PlayerDamaged(float damage)
+    public void PlayerDamaged(int damage)
     {
         PlayerCurrentHP -= damage;
         Debug.Log($"{damage}ダメージを受けた！");
-        _controller.TakeDamage( damage );
+        for(int i = 0; i < _hps.Length; i++)
+        {
+            _hps[i].gameObject.SetActive(false);
+        }
+        for(int i = 0; i < PlayerCurrentHP; i++)
+        {
+            _hps[i].gameObject.SetActive(true);
+        }
     }
 
 }

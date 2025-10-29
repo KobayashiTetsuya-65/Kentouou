@@ -30,16 +30,18 @@ public class UIManager : MonoBehaviour
     [SerializeField] private RectTransform _weakPanelErtr;
     [Tooltip("自分弱点パネル"),SerializeField] private GameObject _weakPointPanelP;
     [SerializeField] private RectTransform _weakPanelPrtr;
-    [Header("弱点")]
+    [Header("生成物")]
     [Tooltip("弱点画像"), SerializeField] private GameObject _weakPointPrefab;
+    [Tooltip("弱点タイマー"), SerializeField] private GameObject _weakTimerPrefab;
     [Header("カウントダウンテキスト")]
     [SerializeField] private TextMeshProUGUI[] _countDownTexts;
     [SerializeField] private float _countDuration = 0.7f;
     [SerializeField] private float _maxScale = 2.5f;
-    private HPBarController _HPBarP, _HPBarE;
-    private RectTransform _weakRect;
+    private HPBarController _HPBarE;
+    private Player _player;
+    private RectTransform _weakRect,_weakTimerRect;
     private Vector2 _idlePlayerAnchoredPos, _idleEnemyAnchoredPos;
-    private GameObject _weakPoint;
+    private GameObject _weakPoint,_weakTimer;
     private Sprite _idleSpritePlayer,_idleSpriteEnemy;
     private float _width, _height, _randomX, _randomY;
 
@@ -48,9 +50,9 @@ public class UIManager : MonoBehaviour
     /// </summary>
      public void ResetState()
     {
-        _HPBarP = _playerHP.GetComponent<HPBarController>();
         _HPBarE = _enemyHP.GetComponent<HPBarController>();
-        _HPBarP.HPBarReset();
+        _player = _playerHP.GetComponent<Player>();
+        _player.PlayerStateReset();
         _HPBarE.HPBarReset();
         InGameStart(false);
         _countDownPanel.SetActive(false);
@@ -67,12 +69,14 @@ public class UIManager : MonoBehaviour
     {
         if (isEnemy)
         {
+            _weakTimer = Instantiate(_weakTimerPrefab, _weakPointPanelE.transform);
             _weakPoint = Instantiate(_weakPointPrefab, _weakPointPanelE.transform);
             _width = _weakPanelErtr.rect.width;
             _height = _weakPanelErtr.rect.height;
         }
         else
         {
+            _weakTimer = Instantiate(_weakTimerPrefab, _weakPointPanelP.transform);
             _weakPoint = Instantiate(_weakPointPrefab,_weakPointPanelP.transform);
             _width = _weakPanelPrtr.rect.width;
             _height = _weakPanelPrtr.rect.height;
@@ -80,7 +84,22 @@ public class UIManager : MonoBehaviour
         _randomX = Random.Range(-_width / 2f, _width / 2f);
         _randomY = Random.Range(-_height / 2f, _height / 2f);
         _weakRect = _weakPoint.GetComponent<RectTransform>();
+        _weakTimerRect = _weakTimer.GetComponent<RectTransform>();
         _weakRect.anchoredPosition = new Vector2(_randomX, _randomY);
+        _weakTimerRect.anchoredPosition = new Vector2(_randomX, _randomY);
+    }
+    /// <summary>
+    /// 時間経過で弱点破壊
+    /// </summary>
+    public void TimerChecker(bool isBreak)
+    {
+        if(_weakTimer == null)
+        {
+            Destroy(_weakPoint);
+        }
+        if (isBreak){
+            Destroy(_weakTimer);
+        }
     }
     /// <summary>
     /// 準備パネルの表示
