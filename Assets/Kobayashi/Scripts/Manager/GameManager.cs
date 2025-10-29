@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public bool Hit = false;
     public bool Miss = false;
     private bool _weakPoint = false;
-    private bool _enemyWeak;
+    private bool _enemyWeak,_spcialCreate = false;
     public float Damage;
     private float _point;
     [Tooltip("敵に弱点が沸く確率"), SerializeField] private float _parcent = 0.9f;
@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
                             _uiManager.InGameStart(true);
                             _player.PlayerStateReset();
                             _enemy.EnemyStateReset();
+                            _spcialCreate = false;
                             StartCoroutine(_uiManager.CountDown());
                         }
                         break;
@@ -63,6 +64,12 @@ public class GameManager : MonoBehaviour
                         //UIManagerの方でカウントダウン処理
                     break;
                     case InGamePhase.Chose:
+                        if (!_spcialCreate)
+                        {
+                            StartCoroutine(_uiManager.CreateSpecialGauge());
+                            _spcialCreate = true;
+                            Debug.Log("必殺生成フラグON！");
+                        }
                         if (Hit)//弱点攻撃時
                         {
                             StartCoroutine(_uiManager.AttackMotion(Hit));
@@ -104,8 +111,8 @@ public class GameManager : MonoBehaviour
                             }
                         }
                             break;
-                    case InGamePhase.Attack:
-
+                    case InGamePhase.Attack://必殺技
+                        _uiManager.TimerChecker(true);
                     break;
                 }
             break;

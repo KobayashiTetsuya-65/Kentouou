@@ -14,6 +14,7 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
     [Tooltip("最初の透明度"), SerializeField, Range(0f, 1f)] private float _alphaStart = 0.2f;
     [Tooltip("クリック回数"), SerializeField, Range(1,10)] private int _maxClick = 5;
     [Tooltip("壊れるまでの秒数"), SerializeField] private float _duration = 0.5f;
+    [Tooltip("自壊するまでの時間"),SerializeField] private float _timer = 10;
     [Header("範囲設定")]
     [SerializeField] private float _minX = -750f;
     [SerializeField] private float _maxX = 750f;
@@ -30,6 +31,10 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
         _backImage.color = new Color(1,1,1,_alphaStart);
         _frontImage.fillAmount = 0;
         _increase = 1f / (float)_maxClick;
+        StartCoroutine(BreakTimer());
+        _randomX = Random.Range(_minX, _maxX);
+        _randomY = Random.Range(_minY, _maxY);
+        _gauge.anchoredPosition = new Vector2(_randomX, _randomY);
     }
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -48,12 +53,13 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
     }
     private IEnumerator BreakGauge()
     {
+        GameManager.Instance._gamePhase = InGamePhase.Attack;
         yield return new WaitForSeconds(_duration);
         Destroy(gameObject);
     }
-    // Update is called once per frame
-    void Update()
+    private IEnumerator BreakTimer()
     {
-        
+        yield return new WaitForSeconds(_timer);
+        Destroy(gameObject);
     }
 }

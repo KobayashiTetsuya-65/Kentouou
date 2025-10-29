@@ -37,11 +37,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] _countDownTexts;
     [SerializeField] private float _countDuration = 0.7f;
     [SerializeField] private float _maxScale = 2.5f;
+    [Tooltip("必殺ゲージ"), SerializeField] private GameObject _gaugePrefab;
+    [Tooltip("ゲージが沸くまでの時間"), SerializeField] private float _timer = 5f;
+    [SerializeField]private Canvas _canvas;
     private HPBarController _HPBarE;
     private Player _player;
     private RectTransform _weakRect,_weakTimerRect;
     private Vector2 _idlePlayerAnchoredPos, _idleEnemyAnchoredPos;
-    private GameObject _weakPoint,_weakTimer;
+    private GameObject _weakPoint,_weakTimer,_special;
     private Sprite _idleSpritePlayer,_idleSpriteEnemy;
     private float _width, _height, _randomX, _randomY;
 
@@ -99,6 +102,10 @@ public class UIManager : MonoBehaviour
         }
         if (isBreak){
             Destroy(_weakTimer);
+            if(_weakPoint != null)
+            {
+                Destroy(_weakPoint);
+            }
         }
     }
     /// <summary>
@@ -166,5 +173,16 @@ public class UIManager : MonoBehaviour
         _enemyImage.sprite = _idleSpriteEnemy;
         _playerRectTr.anchoredPosition = _idlePlayerAnchoredPos;
         _enemyRectTr.anchoredPosition = _idleEnemyAnchoredPos;
+    }
+    /// <summary>
+    /// 時間経過でスペシャルゲージ生成
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CreateSpecialGauge()
+    {
+        yield return new WaitForSeconds(_timer);
+        _special = Instantiate(_gaugePrefab);
+        _special.transform.SetParent(_canvas.transform,false);
+        Debug.Log("必殺ゲージ出現！！");
     }
 }
