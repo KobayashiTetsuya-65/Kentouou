@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,10 +8,13 @@ public class GameManager : MonoBehaviour
     private UIManager _uiManager;
     public InGamePhase _gamePhase;
     private SceneDivision _currentScene;
+    public Coroutine _coroutine;
     public bool Hit = false;
     public bool Miss = false;
+    public bool IsSpecialFinish = false;
+    private bool _special;
     private bool _weakPoint = false;
-    private bool _enemyWeak;
+    private bool _enemyWeak,_spcialCreate = false;
     public float Damage;
     private float _point;
     [Tooltip("敵に弱点が沸く確率"), SerializeField] private float _parcent = 0.9f;
@@ -33,8 +34,10 @@ public class GameManager : MonoBehaviour
         _enemy = FindAnyObjectByType<Enemy>();
         _uiManager = FindAnyObjectByType<UIManager>();
 
-        ChangePhase(InGamePhase.Start);
+        _gamePhase = InGamePhase.Start;
+        _currentScene = SceneDivision.InGame;
         _uiManager.ResetState();
+        _special = false;
     }
 
 
@@ -56,6 +59,7 @@ public class GameManager : MonoBehaviour
                             _uiManager.InGameStart(true);
                             _player.PlayerStateReset();
                             _enemy.EnemyStateReset();
+                            _spcialCreate = false;
                             StartCoroutine(_uiManager.CountDown());
                         }
                         break;
@@ -63,9 +67,15 @@ public class GameManager : MonoBehaviour
                         //UIManagerの方でカウントダウン処理
                     break;
                     case InGamePhase.Chose:
+                        if (!_spcialCreate)
+                        {
+                            StartCoroutine(_uiManager.CreateSpecialGauge());
+                            _spcialCreate = true;
+                            Debug.Log("必殺生成フラグON！");
+                        }
                         if (Hit)//弱点攻撃時
                         {
-                            StartCoroutine(_uiManager.AttackMotion(Hit));
+                            if(_coroutine == null) _coroutine = StartCoroutine(_uiManager.AttackMotion(Hit));
                             _enemy.EnemyDamaged(Damage);
                             _uiManager.TimerChecker(true);
                             Hit = false;
@@ -91,7 +101,7 @@ public class GameManager : MonoBehaviour
                             }
                             if (Miss)//弱点外を検知
                             {
-                                StartCoroutine(_uiManager.AttackMotion(Hit));
+                                if (_coroutine == null) _coroutine = StartCoroutine(_uiManager.AttackMotion(Hit));
                                 _player.PlayerDamaged(1);
                                 _uiManager.TimerChecker(true);
                                 Miss = false;
@@ -104,19 +114,42 @@ public class GameManager : MonoBehaviour
                             }
                         }
                             break;
-                    case InGamePhase.Attack:
-
+                    case InGamePhase.Attack://必殺技
+                        if (!_special)
+                        {
+                            _uiManager.TimerChecker(true);
+                            _uiManager.UseSpecial();
+                            _special = true;
+                        }
+                        if (Hit)
+                        {
+                            StartCoroutine(_uiManager.AttackMotion(Hit));
+                            _enemy.EnemyDamaged(Damage);
+                            Hit = false;
+                            if (_enemy.EnemyCurrentHP <= 0)//勝利時
+                            {
+                                _gamePhase = InGamePhase.Start;
+                                _currentScene = SceneDivision.Result;
+                            }
+                        }
+                        if (IsSpecialFinish)
+                        {
+                            _gamePhase = InGamePhase.Chose;
+                            _uiManager.ResetCharactorSprite();
+                            _weakPoint = false;
+                            _spcialCreate = false;
+                            _special = false;
+                            Hit = false;
+                            Miss = false;
+                            IsSpecialFinish = false;
+                        }
                     break;
                 }
             break;
             case SceneDivision.Result://リザルトシーンで実行したいこと 
+
                 Debug.Log("結果発表～～～～～");
             break;
         }
-    }
-    private void ChangePhase(InGamePhase phaseName)
-    {
-        _gamePhase = phaseName;
-        _currentScene = SceneDivision.InGame;
     }
 }

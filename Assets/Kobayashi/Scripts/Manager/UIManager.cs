@@ -9,46 +9,69 @@ public class UIManager : MonoBehaviour
     [Header("HPゲージ")]
     [Tooltip("プレイヤーHPゲージ"), SerializeField] private GameObject _playerHP;
     [Tooltip("エネミーHPゲージ"), SerializeField] private GameObject _enemyHP;
+
     [Header("キャラクター座標")]
     [Tooltip("プレイヤー"), SerializeField] private RectTransform _playerRectTr;
     [Tooltip("エネミー"), SerializeField] private RectTransform _enemyRectTr;
+    [Tooltip("定位置"),SerializeField] private RectTransform playerRect;
+    [Tooltip("定位置"),SerializeField] private RectTransform enemyRect;
+
+
     [Header("キャラクターイメージ")]
     [Tooltip("プレイヤー"),SerializeField] private Image _playerImage;
     [Tooltip("エネミー"),SerializeField] private Image _enemyImage;
+
+    [Header("キャラクター画像")]
+    [Tooltip("プレイヤー"),SerializeField] private Sprite _playerSprite;
+    [Tooltip("エネミー"),SerializeField] private Sprite _enemySprites;
+
     [Header("攻撃モーション")]
     [Tooltip("プレイヤーの攻撃"), SerializeField] private Sprite[] _attackPlayerSprits;
     [Tooltip("エネミーの攻撃"), SerializeField] private Sprite[] _attackEnemySprits;
+
     [Header("被爆時の画像")]
     [Tooltip("プレイヤー"), SerializeField] private Sprite _damagedPlayerSprite;
     [Tooltip("エネミー"), SerializeField] private Sprite _damagedEnemySprite;
+
     [Header("数値設定")]
     [Tooltip("攻撃アニメーションの間隔"), SerializeField] private float _attackDuration = 0.25f;
+    [SerializeField] private float _countDuration = 0.7f;
+    [SerializeField] private float _maxScale = 2.5f;
+    [Tooltip("ゲージが沸くまでの時間"), SerializeField] private float _timer = 5f;
+
     [Header("パネル")]
+    [Tooltip("インゲームパネル"), SerializeField] private GameObject _panel;
     [Tooltip("スタートパネル"),SerializeField] private GameObject _startPanel;
     [Tooltip("カウントダウンパネル"), SerializeField] private GameObject _countDownPanel;
     [Tooltip("敵弱点パネル"),SerializeField] private GameObject _weakPointPanelE;
     [SerializeField] private RectTransform _weakPanelErtr;
     [Tooltip("自分弱点パネル"),SerializeField] private GameObject _weakPointPanelP;
     [SerializeField] private RectTransform _weakPanelPrtr;
+
     [Header("生成物")]
     [Tooltip("弱点画像"), SerializeField] private GameObject _weakPointPrefab;
     [Tooltip("弱点タイマー"), SerializeField] private GameObject _weakTimerPrefab;
+    [Tooltip("必殺ゲージ"), SerializeField] private GameObject _gaugePrefab;
+    [Tooltip("必殺弱点"), SerializeField] private GameObject _specialWeakPointPrefab;
+
     [Header("カウントダウンテキスト")]
     [SerializeField] private TextMeshProUGUI[] _countDownTexts;
-    [SerializeField] private float _countDuration = 0.7f;
-    [SerializeField] private float _maxScale = 2.5f;
+
+    [SerializeField]private Canvas _canvas;
     private HPBarController _HPBarE;
     private Player _player;
     private RectTransform _weakRect,_weakTimerRect;
-    private Vector2 _idlePlayerAnchoredPos, _idleEnemyAnchoredPos;
-    private GameObject _weakPoint,_weakTimer;
-    private Sprite _idleSpritePlayer,_idleSpriteEnemy;
+    private GameObject _weakPoint,_weakTimer,_special,_bigWeakPoint;
     private float _width, _height, _randomX, _randomY;
 
+    private void Awake()
+    {
+        _panel.SetActive(true);
+    }
     /// <summary>
     /// UIをリセット
     /// </summary>
-     public void ResetState()
+    public void ResetState()
     {
         _HPBarE = _enemyHP.GetComponent<HPBarController>();
         _player = _playerHP.GetComponent<Player>();
@@ -99,6 +122,10 @@ public class UIManager : MonoBehaviour
         }
         if (isBreak){
             Destroy(_weakTimer);
+            if(_weakPoint != null)
+            {
+                Destroy(_weakPoint);
+            }
         }
     }
     /// <summary>
@@ -142,10 +169,6 @@ public class UIManager : MonoBehaviour
     /// <param name="isPlayer"></param>
     public IEnumerator AttackMotion(bool isPlayer)
     {
-        _idleSpritePlayer = _playerImage.sprite;
-        _idleSpriteEnemy = _enemyImage.sprite;
-        _idlePlayerAnchoredPos = _playerRectTr.anchoredPosition;
-        _idleEnemyAnchoredPos = _enemyRectTr.anchoredPosition;
         int n = Random.Range(0, 2);
         if (isPlayer)
         {
@@ -162,9 +185,40 @@ public class UIManager : MonoBehaviour
             _enemyRectTr.anchoredPosition -= new Vector2(50, 0);
         }
         yield return new WaitForSeconds(_attackDuration);
-        _playerImage.sprite = _idleSpritePlayer;
-        _enemyImage.sprite = _idleSpriteEnemy;
-        _playerRectTr.anchoredPosition = _idlePlayerAnchoredPos;
-        _enemyRectTr.anchoredPosition = _idleEnemyAnchoredPos;
+        _playerImage.sprite = _playerSprite;
+        _enemyImage.sprite = _enemySprites;
+        _playerRectTr.anchoredPosition = playerRect.anchoredPosition;
+        _enemyRectTr.anchoredPosition = enemyRect.anchoredPosition;
+        GameManager.Instance._coroutine = null;
+    }
+    /// <summary>
+    /// 時間経過でスペシャルゲージ生成
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CreateSpecialGauge()
+    {
+        yield return new WaitForSeconds(_timer);
+        _special = Instantiate(_gaugePrefab);
+        _special.transform.SetParent(_canvas.transform,false);
+        Debug.Log("必殺ゲージ出現！！");
+    }
+    /// <summary>
+    /// 必殺技
+    /// </summary>
+    public void UseSpecial()
+    {
+        _bigWeakPoint = Instantiate(_specialWeakPointPrefab);
+        _bigWeakPoint.transform.SetParent(_canvas.transform,false);
+        //演出
+    }
+    /// <summary>
+    /// キャラクターの見た目を元に戻す
+    /// </summary>
+    public void ResetCharactorSprite()
+    {
+        _playerImage.sprite = _playerSprite;
+        _enemyImage.sprite = _enemySprites;
+        _playerRectTr.anchoredPosition = playerRect.anchoredPosition;
+        _enemyRectTr.anchoredPosition = enemyRect.anchoredPosition;
     }
 }
