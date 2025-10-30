@@ -6,7 +6,8 @@ public enum InGamePhase
     Start,
     CountDown,
     Chose,
-    Attack
+    Attack,
+    Direction
 }
 /// <summary>
 /// ‚È‚ñ‚ÌƒV[ƒ“‚©

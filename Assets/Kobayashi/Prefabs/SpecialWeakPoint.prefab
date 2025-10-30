@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Special
   _gauge: {fileID: 2925752674784276224}
+  _special: {fileID: 5942060418883872650}
   _specialRectTr: {fileID: 299541436986460052}
   _enemyRectTr: {fileID: 5668034945804021097, guid: 2778573ff7d11a941a21473e74e3e35d, type: 3}
   _duration: 7
@@ -121,8 +122,8 @@ RectTransform:
   m_GameObject: {fileID: 9011840090711331791}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 299541436986460052}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
