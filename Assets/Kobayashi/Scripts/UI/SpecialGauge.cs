@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
+using DG.Tweening;
 
 public class SpecialGauge : MonoBehaviour,IPointerClickHandler
 {
@@ -60,6 +61,7 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
     private IEnumerator BreakTimer()
     {
         yield return new WaitForSeconds(_timer);
+        GameManager.Instance._spcialCreate = false;
         Destroy(gameObject);
     }
 }
