@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
     public bool IsSpecialFinish = false;
     private bool _special;
     private bool _weakPoint = false;
-    private bool _enemyWeak,_spcialCreate = false;
+    private bool _enemyWeak;
+    public bool _spcialCreate = false;
     public float Damage;
     private float _point;
     [Tooltip("“G‚ÉŽã“_‚ª•¦‚­Šm—¦"), SerializeField] private float _parcent = 0.9f;
