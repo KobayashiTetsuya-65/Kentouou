@@ -66,7 +66,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        _panel.SetActive(true);
+        InGamePanel(true,0);
     }
     /// <summary>
     /// UIをリセット
@@ -208,7 +208,7 @@ public class UIManager : MonoBehaviour
     public void UseSpecial()
     {
         _bigWeakPoint = Instantiate(_specialWeakPointPrefab);
-        _bigWeakPoint.transform.SetParent(_canvas.transform,false);
+        _bigWeakPoint.transform.SetParent(_panel.transform,false);
         //演出
     }
     /// <summary>
@@ -220,5 +220,10 @@ public class UIManager : MonoBehaviour
         _enemyImage.sprite = _enemySprites;
         _playerRectTr.anchoredPosition = playerRect.anchoredPosition;
         _enemyRectTr.anchoredPosition = enemyRect.anchoredPosition;
+    }
+    public IEnumerator InGamePanel(bool show,float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        _panel.gameObject.SetActive(show);
     }
 }

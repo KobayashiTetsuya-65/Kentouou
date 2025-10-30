@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     private bool _special;
     private bool _weakPoint = false;
     private bool _enemyWeak;
+    private bool _isPanel = false;
     public bool _spcialCreate = false;
     public float Damage;
     private float _point;
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
         _currentScene = SceneDivision.InGame;
         _uiManager.ResetState();
         _special = false;
+        _isPanel = false;
     }
 
 
@@ -145,13 +147,19 @@ public class GameManager : MonoBehaviour
                             IsSpecialFinish = false;
                         }
                     break;
-                    case InGamePhase.Direction:
+                    case InGamePhase.Direction://演出中
                         _uiManager.TimerChecker(true);
+
                     break;
                 }
             break;
             case SceneDivision.Result://リザルトシーンで実行したいこと 
-
+                if (!_isPanel)
+                {
+                    StartCoroutine(_uiManager.InGamePanel(false, 2));
+                    //リザルトパネル表示
+                    _isPanel = true;
+                }
                 Debug.Log("結果発表～～～～～");
             break;
         }
