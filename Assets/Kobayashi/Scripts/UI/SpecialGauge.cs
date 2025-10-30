@@ -52,12 +52,39 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
             _gauge.anchoredPosition = new Vector2(_randomX, _randomY);
         }
     }
+    /// <summary>
+    /// 必殺ゲージがたまった演出＆処理
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator BreakGauge()
     {
+        GameManager.Instance._gamePhase = InGamePhase.Direction;
+        Sequence seq = DOTween.Sequence();
+
+        for(int i = 0;i < _maxClick - 1; i++)
+        {
+            seq.Append(_frontImage.DOColor(Color.yellow, 0.1f));
+            seq.Append(_frontImage.DOColor(Color.white, 0.1f));
+            seq.Append(_frontImage.DOColor(Color.red, 0.1f));
+        }
+        seq.Join(_gauge.DOShakeAnchorPos(0.3f * (_maxClick - 1), 10f, 10, 90f, false, true));
+
+        // 膨張させる
+        seq.Join(_gauge.DOScale(3f, 0.1f).SetEase(Ease.OutBack));
+        seq.Append(_gauge.DOScale(1f, 0.2f).SetEase(Ease.InOutCubic));
+        yield return seq.WaitForCompletion();
+        //yield return new WaitForSeconds(_duration);
         GameManager.Instance._gamePhase = InGamePhase.Attack;
-        yield return new WaitForSeconds(_duration);
+        // 光を残して消える
+        _frontImage.DOFade(0f, 0.2f);
+        _backImage.DOFade(0f, 0.2f);
+        yield return new WaitForSeconds(0.3f);
         Destroy(gameObject);
     }
+    /// <summary>
+    /// 時間切れでなくなる
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator BreakTimer()
     {
         yield return new WaitForSeconds(_timer);

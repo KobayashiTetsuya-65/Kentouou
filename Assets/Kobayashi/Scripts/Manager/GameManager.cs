@@ -145,6 +145,9 @@ public class GameManager : MonoBehaviour
                             IsSpecialFinish = false;
                         }
                     break;
+                    case InGamePhase.Direction:
+                        _uiManager.TimerChecker(true);
+                    break;
                 }
             break;
             case SceneDivision.Result://リザルトシーンで実行したいこと 
