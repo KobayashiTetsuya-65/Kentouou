@@ -153,11 +153,16 @@ public class UIManager : MonoBehaviour
             _countDownTexts[i].gameObject.SetActive(true);
             if (i == _countDownTexts.Length - 1)
             {
+                AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Gong);
                 _countDuration *= 1.5f;
                 _countDownTexts[i].rectTransform.localScale = Vector3.zero;
                 _countDownTexts[i].rectTransform.DOScale(_maxScale, _countDuration);
             }
-            yield return new WaitForSeconds(_countDuration);
+            else
+            {
+                AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Taiko);
+            }
+                yield return new WaitForSeconds(_countDuration);
         }
         _countDownTexts[_countDownTexts.Length - 1].gameObject.SetActive(false);
         _countDownPanel.SetActive(false);
@@ -225,5 +230,9 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         _panel.gameObject.SetActive(show);
+    }
+    public void FinishInGame()
+    {
+        Destroy(_special);
     }
 }
