@@ -55,15 +55,21 @@ MonoBehaviour:
     _playOnAwake: 0
     _volume: 1
     _clip: {fileID: 8300000, guid: 4fab3b5ff8ccb36438e4f72c8f76cca9, type: 3}
-  - _key: BiriBri
-    _type: 1
-    _isLoop: 0
-    _playOnAwake: 0
-    _volume: 1
-    _clip: {fileID: 8300000, guid: 0bdb8425bf1dc7249b6624a3fabc9e40, type: 3}
-  - _key: UseSpecial
+  - _key: Biribiri
     _type: 1
     _isLoop: 0
     _playOnAwake: 0
     _volume: 1
     _clip: {fileID: 8300000, guid: 12e74346ebdec5a4fb2ed9e08afcb069, type: 3}
+  - _key: UseSpecial
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 0
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 8401b1007d3f8634287f06013b039faa, type: 3}
+  - _key: Charge
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 0
+    _volume: 1
+    _clip: {fileID: 8300000, guid: a9a74a3fbe9eac64aa25e1651e83a8a1, type: 3}
