@@ -8,13 +8,15 @@ public class GameManager : MonoBehaviour
     private UIManager _uiManager;
     public InGamePhase _gamePhase;
     private SceneDivision _currentScene;
-    public Coroutine _coroutine;
+    public Coroutine _coroutine,_specialCoroutine;
     public bool Hit = false;
     public bool Miss = false;
     public bool IsSpecialFinish = false;
+    private bool _changeBGM = false;
     private bool _special;
     private bool _weakPoint = false;
     private bool _enemyWeak;
+    private bool _isPanel = false;
     public bool _spcialCreate = false;
     public float Damage;
     private float _point;
@@ -39,6 +41,8 @@ public class GameManager : MonoBehaviour
         _currentScene = SceneDivision.InGame;
         _uiManager.ResetState();
         _special = false;
+        _isPanel = false;
+        _changeBGM=false;
     }
 
 
@@ -54,6 +58,12 @@ public class GameManager : MonoBehaviour
                 switch (_gamePhase)
                 {
                     case InGamePhase.Start:
+                        if (!_changeBGM)
+                        {
+                            AudioManager.Instance.StopBGM();
+                            AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.InGame);
+                            _changeBGM = true;
+                        }
                         if (Input.GetMouseButtonDown(0))
                         {
                             _gamePhase = InGamePhase.CountDown;
@@ -70,19 +80,22 @@ public class GameManager : MonoBehaviour
                     case InGamePhase.Chose:
                         if (!_spcialCreate)
                         {
-                            StartCoroutine(_uiManager.CreateSpecialGauge());
+                            _specialCoroutine = StartCoroutine(_uiManager.CreateSpecialGauge());
                             _spcialCreate = true;
                             Debug.Log("必殺生成フラグON！");
                         }
                         if (Hit)//弱点攻撃時
                         {
-                            if(_coroutine == null) _coroutine = StartCoroutine(_uiManager.AttackMotion(Hit));
+                            AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Punch);
+                            Debug.Log("攻撃！");
+                            if (_coroutine == null) _coroutine = StartCoroutine(_uiManager.AttackMotion(Hit));
                             _enemy.EnemyDamaged(Damage);
                             _uiManager.TimerChecker(true);
                             Hit = false;
                             _weakPoint = false;
                             if(_enemy.EnemyCurrentHP <= 0)//勝利時
                             {
+                                AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Finish);
                                 _gamePhase = InGamePhase.Start;
                                 _currentScene = SceneDivision.Result;
                             }
@@ -102,6 +115,7 @@ public class GameManager : MonoBehaviour
                             }
                             if (Miss)//弱点外を検知
                             {
+                                AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Damaged);
                                 if (_coroutine == null) _coroutine = StartCoroutine(_uiManager.AttackMotion(Hit));
                                 _player.PlayerDamaged(1);
                                 _uiManager.TimerChecker(true);
@@ -109,6 +123,7 @@ public class GameManager : MonoBehaviour
                                 _weakPoint = false;
                                 if (_player.PlayerCurrentHP <= 0)//敗北時
                                 {
+                                    AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Finish);
                                     _gamePhase = InGamePhase.Start;
                                     _currentScene = SceneDivision.Result;
                                 }
@@ -124,11 +139,13 @@ public class GameManager : MonoBehaviour
                         }
                         if (Hit)
                         {
+                            AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Critical);
                             StartCoroutine(_uiManager.AttackMotion(Hit));
                             _enemy.EnemyDamaged(Damage);
                             Hit = false;
                             if (_enemy.EnemyCurrentHP <= 0)//勝利時
                             {
+                                AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Finish);
                                 _gamePhase = InGamePhase.Start;
                                 _currentScene = SceneDivision.Result;
                             }
@@ -145,14 +162,23 @@ public class GameManager : MonoBehaviour
                             IsSpecialFinish = false;
                         }
                     break;
-                    case InGamePhase.Direction:
+                    case InGamePhase.Direction://演出中
                         _uiManager.TimerChecker(true);
+
                     break;
                 }
             break;
-            case SceneDivision.Result://リザルトシーンで実行したいこと 
-
-                Debug.Log("結果発表～～～～～");
+            case SceneDivision.Result://リザルトシーンで実行したいこと
+                if(_specialCoroutine != null)
+                {
+                    _uiManager.FinishInGame();
+                }
+                if (!_isPanel)
+                {
+                    StartCoroutine(_uiManager.InGamePanel(false, 2));
+                    //リザルトパネル表示
+                    _isPanel = true;
+                }
             break;
         }
     }

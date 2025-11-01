@@ -66,7 +66,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        _panel.SetActive(true);
+        InGamePanel(true,0);
     }
     /// <summary>
     /// UIをリセット
@@ -153,11 +153,16 @@ public class UIManager : MonoBehaviour
             _countDownTexts[i].gameObject.SetActive(true);
             if (i == _countDownTexts.Length - 1)
             {
+                AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Gong);
                 _countDuration *= 1.5f;
                 _countDownTexts[i].rectTransform.localScale = Vector3.zero;
                 _countDownTexts[i].rectTransform.DOScale(_maxScale, _countDuration);
             }
-            yield return new WaitForSeconds(_countDuration);
+            else
+            {
+                AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Taiko);
+            }
+                yield return new WaitForSeconds(_countDuration);
         }
         _countDownTexts[_countDownTexts.Length - 1].gameObject.SetActive(false);
         _countDownPanel.SetActive(false);
@@ -208,7 +213,7 @@ public class UIManager : MonoBehaviour
     public void UseSpecial()
     {
         _bigWeakPoint = Instantiate(_specialWeakPointPrefab);
-        _bigWeakPoint.transform.SetParent(_canvas.transform,false);
+        _bigWeakPoint.transform.SetParent(_panel.transform,false);
         //演出
     }
     /// <summary>
@@ -220,5 +225,14 @@ public class UIManager : MonoBehaviour
         _enemyImage.sprite = _enemySprites;
         _playerRectTr.anchoredPosition = playerRect.anchoredPosition;
         _enemyRectTr.anchoredPosition = enemyRect.anchoredPosition;
+    }
+    public IEnumerator InGamePanel(bool show,float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        _panel.gameObject.SetActive(show);
+    }
+    public void FinishInGame()
+    {
+        Destroy(_special);
     }
 }
