@@ -8,10 +8,11 @@ public class GameManager : MonoBehaviour
     private UIManager _uiManager;
     public InGamePhase _gamePhase;
     private SceneDivision _currentScene;
-    public Coroutine _coroutine,_specialCoroutine;
+    public Coroutine _coroutine;
     public bool Hit = false;
     public bool Miss = false;
     public bool IsSpecialFinish = false;
+    public bool PlayerWin = false;
     private bool _changeBGM = false;
     private bool _special;
     private bool _weakPoint = false;
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
         _special = false;
         _isPanel = false;
         _changeBGM=false;
+        PlayerWin = false;
     }
 
 
@@ -80,7 +82,7 @@ public class GameManager : MonoBehaviour
                     case InGamePhase.Chose:
                         if (!_spcialCreate)
                         {
-                            _specialCoroutine = StartCoroutine(_uiManager.CreateSpecialGauge());
+                            StartCoroutine(_uiManager.CreateSpecialGauge());
                             _spcialCreate = true;
                             Debug.Log("必殺生成フラグON！");
                         }
@@ -98,6 +100,7 @@ public class GameManager : MonoBehaviour
                                 AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Finish);
                                 _gamePhase = InGamePhase.Start;
                                 _currentScene = SceneDivision.Result;
+                                PlayerWin = true;
                             }
                         }
                         else
@@ -126,6 +129,7 @@ public class GameManager : MonoBehaviour
                                     AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Finish);
                                     _gamePhase = InGamePhase.Start;
                                     _currentScene = SceneDivision.Result;
+                                    PlayerWin = false;
                                 }
                             }
                         }
@@ -148,6 +152,7 @@ public class GameManager : MonoBehaviour
                                 AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Finish);
                                 _gamePhase = InGamePhase.Start;
                                 _currentScene = SceneDivision.Result;
+                                PlayerWin = true;
                             }
                         }
                         if (IsSpecialFinish)
@@ -164,19 +169,13 @@ public class GameManager : MonoBehaviour
                     break;
                     case InGamePhase.Direction://演出中
                         _uiManager.TimerChecker(true);
-
                     break;
                 }
             break;
             case SceneDivision.Result://リザルトシーンで実行したいこと
-                if(_specialCoroutine != null)
-                {
-                    _uiManager.FinishInGame();
-                }
                 if (!_isPanel)
                 {
-                    StartCoroutine(_uiManager.InGamePanel(false, 2));
-                    //リザルトパネル表示
+                    StartCoroutine(_uiManager.FinishInGame(PlayerWin));
                     _isPanel = true;
                 }
             break;

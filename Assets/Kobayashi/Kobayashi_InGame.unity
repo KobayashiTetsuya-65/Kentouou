@@ -487,6 +487,20 @@ MonoBehaviour:
   _enemyImage: {fileID: 482965108}
   _playerSprite: {fileID: 21300000, guid: 52b3c95a1b846f89996b6b3837f10009, type: 3}
   _enemySprites: {fileID: 21300000, guid: f33c7fed2b68c5af5bd7241632108828, type: 3}
+  _playerWinner:
+  - {fileID: 21300000, guid: 07dbdb71b576e413ca36fa9a17a768f5, type: 3}
+  - {fileID: 21300000, guid: 72ed03fc7bded9ec4ac719b5f59e32d6, type: 3}
+  _enemyWinner:
+  - {fileID: 21300000, guid: c1f5941990cb262ef935fe8f68bbae8f, type: 3}
+  - {fileID: 21300000, guid: 674c602e297a17cfcb4caae835d49ec4, type: 3}
+  _playerLoser:
+  - {fileID: 21300000, guid: 3364e4caa9ecf7da693939b6aa72eec0, type: 3}
+  - {fileID: 21300000, guid: ad78f42d71887118086bde670cc134b0, type: 3}
+  - {fileID: 21300000, guid: cca1a25ad85cc17e18a6e753dabc7495, type: 3}
+  _enemyLoser:
+  - {fileID: 21300000, guid: 83aa08325b8d5f4df9c1206521ba99bf, type: 3}
+  - {fileID: 21300000, guid: 33f0e6ddb545427a4804681ed96a177d, type: 3}
+  - {fileID: 21300000, guid: 7dc3bca795938cff484c99c240ac6867, type: 3}
   _attackPlayerSprits:
   - {fileID: 21300000, guid: 54b5104d4b2389ef0835ea8c12635c85, type: 3}
   - {fileID: 21300000, guid: f0590c681fa12f9bc9e68730c242d727, type: 3}
@@ -2063,6 +2077,7 @@ MonoBehaviour:
   Hit: 0
   Miss: 0
   IsSpecialFinish: 0
+  PlayerWin: 0
   _spcialCreate: 0
   Damage: 0
   _parcent: 0.6
