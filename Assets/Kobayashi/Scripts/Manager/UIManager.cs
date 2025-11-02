@@ -247,6 +247,7 @@ public class UIManager : MonoBehaviour
     public IEnumerator FinishInGame(bool playerWin)
     {
         if(_special != null) Destroy(_special);
+        if(_bigWeakPoint != null) Destroy(_bigWeakPoint);
         //èIóπââèo
         yield return new WaitForSeconds(0.2f);
         if(playerWin == true)
@@ -254,7 +255,7 @@ public class UIManager : MonoBehaviour
             foreach(var loser in _enemyLoser)
             {
                 _enemyImage.sprite = loser;
-                yield return new WaitForSeconds(0.7f);
+                yield return new WaitForSeconds(0.4f);
             }
             foreach(var winner in _playerWinner)
             {
@@ -266,12 +267,12 @@ public class UIManager : MonoBehaviour
         {
             foreach (var loser in _playerLoser)
             {
-                _enemyImage.sprite = loser;
-                yield return new WaitForSeconds(0.7f);
+                _playerImage.sprite = loser;
+                yield return new WaitForSeconds(0.4f);
             }
             foreach (var winner in _enemyWinner)
             {
-                _playerImage.sprite = winner;
+                _enemyImage.sprite = winner;
                 yield return new WaitForSeconds(0.7f);
             }
         }
