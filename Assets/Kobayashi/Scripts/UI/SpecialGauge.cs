@@ -24,6 +24,7 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
     private Image _backImage,_frontImage;
     private int _currentClick = 0;
     private float _increase,_randomX,_randomY;
+    private bool _isAction = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,21 +37,26 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
         _randomX = Random.Range(_minX, _maxX);
         _randomY = Random.Range(_minY, _maxY);
         _gauge.anchoredPosition = new Vector2(_randomX, _randomY);
+        _isAction = false ;
     }
     public void OnPointerClick(PointerEventData eventData)
     {
         _currentClick++;
         _frontImage.fillAmount += _increase;
-        if(_currentClick >= _maxClick)
+        if (!_isAction)
         {
-            StartCoroutine(BreakGauge());
-        }
-        else
-        {
-            AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Charge);
-            _randomX = Random.Range(_minX, _maxX);
-            _randomY = Random.Range(_minY, _maxY);
-            _gauge.anchoredPosition = new Vector2(_randomX, _randomY);
+            if (_currentClick >= _maxClick)
+            {
+                StartCoroutine(BreakGauge());
+                _isAction = true;
+            }
+            else
+            {
+                AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Charge);
+                _randomX = Random.Range(_minX, _maxX);
+                _randomY = Random.Range(_minY, _maxY);
+                _gauge.anchoredPosition = new Vector2(_randomX, _randomY);
+            }
         }
     }
     /// <summary>
