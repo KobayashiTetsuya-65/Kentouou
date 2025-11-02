@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
                                 PlayerWin = true;
                             }
                         }
-                        if (IsSpecialFinish)
+                        if (IsSpecialFinish)//必殺技終了時の処理
                         {
                             _gamePhase = InGamePhase.Chose;
                             _uiManager.ResetCharactorSprite();
@@ -169,7 +169,7 @@ public class GameManager : MonoBehaviour
                     break;
                     case InGamePhase.Direction://演出中
                         _uiManager.TimerChecker(true);
-                    break;
+                        break;
                 }
             break;
             case SceneDivision.Result://リザルトシーンで実行したいこと
