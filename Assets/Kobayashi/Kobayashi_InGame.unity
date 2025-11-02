@@ -487,6 +487,20 @@ MonoBehaviour:
   _enemyImage: {fileID: 482965108}
   _playerSprite: {fileID: 21300000, guid: 52b3c95a1b846f89996b6b3837f10009, type: 3}
   _enemySprites: {fileID: 21300000, guid: f33c7fed2b68c5af5bd7241632108828, type: 3}
+  _playerWinner:
+  - {fileID: 21300000, guid: 07dbdb71b576e413ca36fa9a17a768f5, type: 3}
+  - {fileID: 21300000, guid: 72ed03fc7bded9ec4ac719b5f59e32d6, type: 3}
+  _enemyWinner:
+  - {fileID: 21300000, guid: c1f5941990cb262ef935fe8f68bbae8f, type: 3}
+  - {fileID: 21300000, guid: 674c602e297a17cfcb4caae835d49ec4, type: 3}
+  _playerLoser:
+  - {fileID: 21300000, guid: 3364e4caa9ecf7da693939b6aa72eec0, type: 3}
+  - {fileID: 21300000, guid: ad78f42d71887118086bde670cc134b0, type: 3}
+  - {fileID: 21300000, guid: cca1a25ad85cc17e18a6e753dabc7495, type: 3}
+  _enemyLoser:
+  - {fileID: 21300000, guid: 83aa08325b8d5f4df9c1206521ba99bf, type: 3}
+  - {fileID: 21300000, guid: 33f0e6ddb545427a4804681ed96a177d, type: 3}
+  - {fileID: 21300000, guid: 7dc3bca795938cff484c99c240ac6867, type: 3}
   _attackPlayerSprits:
   - {fileID: 21300000, guid: 54b5104d4b2389ef0835ea8c12635c85, type: 3}
   - {fileID: 21300000, guid: f0590c681fa12f9bc9e68730c242d727, type: 3}
@@ -2023,6 +2037,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1384066615}
   - component: {fileID: 1384066616}
+  - component: {fileID: 1384066618}
+  - component: {fileID: 1384066617}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2061,8 +2077,123 @@ MonoBehaviour:
   Hit: 0
   Miss: 0
   IsSpecialFinish: 0
+  PlayerWin: 0
+  _spcialCreate: 0
   Damage: 0
   _parcent: 0.6
+--- !u!82 &1384066617
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384066614}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1384066618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384066614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68b34223bae7d834d9354bb7593615dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  _soundDataBase: {fileID: 11400000, guid: d16eb47de0f920d4b9c1319ec170ce4b, type: 2}
+  _bgmSource: {fileID: 1384066617}
+  _seRoot: {fileID: 0}
+  _sePoolSize: 20
 --- !u!1 &1434695025
 GameObject:
   m_ObjectHideFlags: 0

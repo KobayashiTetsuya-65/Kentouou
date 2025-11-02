@@ -25,6 +25,12 @@ public class UIManager : MonoBehaviour
     [Tooltip("プレイヤー"),SerializeField] private Sprite _playerSprite;
     [Tooltip("エネミー"),SerializeField] private Sprite _enemySprites;
 
+    [Header("勝利モーション")]
+    [Tooltip("プレイヤー勝利"), SerializeField] private Sprite[] _playerWinner;
+    [Tooltip("エネミー勝利"),SerializeField] private Sprite[] _enemyWinner;
+    [Tooltip("プレイヤー敗北"), SerializeField] private Sprite[] _playerLoser;
+    [Tooltip("エネミー敗北"), SerializeField] private Sprite[] _enemyLoser;
+
     [Header("攻撃モーション")]
     [Tooltip("プレイヤーの攻撃"), SerializeField] private Sprite[] _attackPlayerSprits;
     [Tooltip("エネミーの攻撃"), SerializeField] private Sprite[] _attackEnemySprits;
@@ -66,7 +72,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        _panel.SetActive(true);
+        InGamePanel(true);
     }
     /// <summary>
     /// UIをリセット
@@ -153,11 +159,16 @@ public class UIManager : MonoBehaviour
             _countDownTexts[i].gameObject.SetActive(true);
             if (i == _countDownTexts.Length - 1)
             {
+                AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Gong);
                 _countDuration *= 1.5f;
                 _countDownTexts[i].rectTransform.localScale = Vector3.zero;
                 _countDownTexts[i].rectTransform.DOScale(_maxScale, _countDuration);
             }
-            yield return new WaitForSeconds(_countDuration);
+            else
+            {
+                AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Taiko);
+            }
+                yield return new WaitForSeconds(_countDuration);
         }
         _countDownTexts[_countDownTexts.Length - 1].gameObject.SetActive(false);
         _countDownPanel.SetActive(false);
@@ -208,7 +219,7 @@ public class UIManager : MonoBehaviour
     public void UseSpecial()
     {
         _bigWeakPoint = Instantiate(_specialWeakPointPrefab);
-        _bigWeakPoint.transform.SetParent(_canvas.transform,false);
+        _bigWeakPoint.transform.SetParent(_panel.transform,false);
         //演出
     }
     /// <summary>
@@ -220,5 +231,51 @@ public class UIManager : MonoBehaviour
         _enemyImage.sprite = _enemySprites;
         _playerRectTr.anchoredPosition = playerRect.anchoredPosition;
         _enemyRectTr.anchoredPosition = enemyRect.anchoredPosition;
+    }
+    /// <summary>
+    /// InGameのパネルの表示切替(時間指定)
+    /// </summary>
+    /// <param name="show"></param>
+    /// <returns></returns>
+    private void InGamePanel(bool show)
+    {
+        _panel.gameObject.SetActive(show);
+    }
+    /// <summary>
+    /// 終了時の処理
+    /// </summary>
+    public IEnumerator FinishInGame(bool playerWin)
+    {
+        if(_special != null) Destroy(_special);
+        //終了演出
+        yield return new WaitForSeconds(0.2f);
+        if(playerWin == true)
+        {
+            foreach(var loser in _enemyLoser)
+            {
+                _enemyImage.sprite = loser;
+                yield return new WaitForSeconds(0.7f);
+            }
+            foreach(var winner in _playerWinner)
+            {
+                _playerImage.sprite = winner;
+                yield return new WaitForSeconds(0.7f);
+            }
+        }
+        else
+        {
+            foreach (var loser in _playerLoser)
+            {
+                _enemyImage.sprite = loser;
+                yield return new WaitForSeconds(0.7f);
+            }
+            foreach (var winner in _enemyWinner)
+            {
+                _playerImage.sprite = winner;
+                yield return new WaitForSeconds(0.7f);
+            }
+        }
+        yield return new WaitForSeconds(2);
+        InGamePanel(false);
     }
 }

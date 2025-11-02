@@ -47,6 +47,7 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
         }
         else
         {
+            AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Charge);
             _randomX = Random.Range(_minX, _maxX);
             _randomY = Random.Range(_minY, _maxY);
             _gauge.anchoredPosition = new Vector2(_randomX, _randomY);
@@ -60,14 +61,19 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
     {
         GameManager.Instance._gamePhase = InGamePhase.Direction;
         Sequence seq = DOTween.Sequence();
-        for(int i = 0;i < _maxClick - 1; i++)
+        AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Biribiri);
+        for (int i = 0;i < _maxClick - 1; i++)
         {
             seq.Append(_frontImage.DOColor(Color.yellow, 0.1f));
             seq.Append(_frontImage.DOColor(Color.white, 0.1f));
             seq.Append(_frontImage.DOColor(Color.red, 0.1f));
         }
         seq.Join(_gauge.DOShakeAnchorPos(0.3f * (_maxClick - 1), 10f, 10, 90f, false, true));
-        seq.Join(_gauge.DOScale(3f, 0.1f).SetEase(Ease.OutBack));
+        seq.AppendCallback(() =>
+        {
+            AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.UseSpecial);
+        });
+        seq.Join(_gauge.DOScale(3f, 0.15f).SetEase(Ease.OutBack));
         seq.Append(_gauge.DOScale(1f, 0.2f).SetEase(Ease.InOutCubic));
         yield return seq.WaitForCompletion();
         GameManager.Instance._gamePhase = InGamePhase.Attack;

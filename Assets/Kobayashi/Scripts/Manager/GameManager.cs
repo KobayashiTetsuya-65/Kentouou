@@ -12,9 +12,12 @@ public class GameManager : MonoBehaviour
     public bool Hit = false;
     public bool Miss = false;
     public bool IsSpecialFinish = false;
+    public bool PlayerWin = false;
+    private bool _changeBGM = false;
     private bool _special;
     private bool _weakPoint = false;
     private bool _enemyWeak;
+    private bool _isPanel = false;
     public bool _spcialCreate = false;
     public float Damage;
     private float _point;
@@ -39,6 +42,9 @@ public class GameManager : MonoBehaviour
         _currentScene = SceneDivision.InGame;
         _uiManager.ResetState();
         _special = false;
+        _isPanel = false;
+        _changeBGM=false;
+        PlayerWin = false;
     }
 
 
@@ -54,6 +60,12 @@ public class GameManager : MonoBehaviour
                 switch (_gamePhase)
                 {
                     case InGamePhase.Start:
+                        if (!_changeBGM)
+                        {
+                            AudioManager.Instance.StopBGM();
+                            AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.InGame);
+                            _changeBGM = true;
+                        }
                         if (Input.GetMouseButtonDown(0))
                         {
                             _gamePhase = InGamePhase.CountDown;
@@ -76,15 +88,19 @@ public class GameManager : MonoBehaviour
                         }
                         if (Hit)//é„ì_çUåÇéû
                         {
-                            if(_coroutine == null) _coroutine = StartCoroutine(_uiManager.AttackMotion(Hit));
+                            AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Punch);
+                            Debug.Log("çUåÇÅI");
+                            if (_coroutine == null) _coroutine = StartCoroutine(_uiManager.AttackMotion(Hit));
                             _enemy.EnemyDamaged(Damage);
                             _uiManager.TimerChecker(true);
                             Hit = false;
                             _weakPoint = false;
                             if(_enemy.EnemyCurrentHP <= 0)//èüóòéû
                             {
+                                AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Finish);
                                 _gamePhase = InGamePhase.Start;
                                 _currentScene = SceneDivision.Result;
+                                PlayerWin = true;
                             }
                         }
                         else
@@ -102,6 +118,7 @@ public class GameManager : MonoBehaviour
                             }
                             if (Miss)//é„ì_äOÇåüím
                             {
+                                AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Damaged);
                                 if (_coroutine == null) _coroutine = StartCoroutine(_uiManager.AttackMotion(Hit));
                                 _player.PlayerDamaged(1);
                                 _uiManager.TimerChecker(true);
@@ -109,8 +126,10 @@ public class GameManager : MonoBehaviour
                                 _weakPoint = false;
                                 if (_player.PlayerCurrentHP <= 0)//îsñkéû
                                 {
+                                    AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Finish);
                                     _gamePhase = InGamePhase.Start;
                                     _currentScene = SceneDivision.Result;
+                                    PlayerWin = false;
                                 }
                             }
                         }
@@ -124,13 +143,16 @@ public class GameManager : MonoBehaviour
                         }
                         if (Hit)
                         {
+                            AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Critical);
                             StartCoroutine(_uiManager.AttackMotion(Hit));
                             _enemy.EnemyDamaged(Damage);
                             Hit = false;
                             if (_enemy.EnemyCurrentHP <= 0)//èüóòéû
                             {
+                                AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Finish);
                                 _gamePhase = InGamePhase.Start;
                                 _currentScene = SceneDivision.Result;
+                                PlayerWin = true;
                             }
                         }
                         if (IsSpecialFinish)
@@ -145,14 +167,17 @@ public class GameManager : MonoBehaviour
                             IsSpecialFinish = false;
                         }
                     break;
-                    case InGamePhase.Direction:
+                    case InGamePhase.Direction://ââèoíÜ
                         _uiManager.TimerChecker(true);
                     break;
                 }
             break;
-            case SceneDivision.Result://ÉäÉUÉãÉgÉVÅ[ÉìÇ≈é¿çsÇµÇΩÇ¢Ç±Ç∆ 
-
-                Debug.Log("åãâ î≠ï\Å`Å`Å`Å`Å`");
+            case SceneDivision.Result://ÉäÉUÉãÉgÉVÅ[ÉìÇ≈é¿çsÇµÇΩÇ¢Ç±Ç∆
+                if (!_isPanel)
+                {
+                    StartCoroutine(_uiManager.FinishInGame(PlayerWin));
+                    _isPanel = true;
+                }
             break;
         }
     }
