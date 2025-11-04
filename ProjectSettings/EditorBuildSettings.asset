@@ -8,4 +8,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Nishino/Title.unity
+    guid: a4a15b0d50c16024881e5879be355f28
+  - enabled: 1
+    path: Assets/Nishino/Credit.unity
+    guid: 57114b5fd4c12674c96350cfbffe4f03
+  - enabled: 1
+    path: Assets/Nishino/Setting.unity
+    guid: fc4880c429656424d87423088d985474
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
