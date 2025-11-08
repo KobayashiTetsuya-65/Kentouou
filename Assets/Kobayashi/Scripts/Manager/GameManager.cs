@@ -33,21 +33,6 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        //後でswitchに入れてエラー対策行う
-        switch (CurrentScene)
-        {
-            case SceneDivision.Title:
-
-            break;
-            case SceneDivision.InGame:
-
-                _gamePhase = InGamePhase.Start;
-                _special = false;
-                _isPanel = false;
-                _changeBGM = false;
-                PlayerWin = false;
-            break;
-        }
     }
 
 
@@ -172,6 +157,7 @@ public class GameManager : MonoBehaviour
                     break;
                     case InGamePhase.Direction://演出中
                         _uiManager.TimerChecker(true);
+                        _gamePhase = InGamePhase.Start;
                         break;
                 }
             break;
@@ -190,5 +176,10 @@ public class GameManager : MonoBehaviour
         _enemy = FindAnyObjectByType<Enemy>();
         _uiManager = FindAnyObjectByType<UIManager>();
         _uiManager.ResetState();
+        _gamePhase = InGamePhase.Start;
+        _special = false;
+        _isPanel = false;
+        _changeBGM = false;
+        PlayerWin = false;
     }
 }
