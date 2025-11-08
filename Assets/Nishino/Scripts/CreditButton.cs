@@ -1,10 +1,23 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CreditButton : MonoBehaviour
 {
-    public void StartBtn()
+    [SerializeField] GameObject configPanel;
+
+    public void startBtn()
     {
-        SceneManager.LoadScene("Credit");
+        configPanel.SetActive(true);
+    }
+
+    public void ShowConfigPanel()
+    {
+        configPanel.SetActive(true);
+    }
+
+    public void HideConfigPanel()
+    {
+        configPanel.SetActive(false);
     }
 }

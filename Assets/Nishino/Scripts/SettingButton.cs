@@ -1,10 +1,25 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SettingButton : MonoBehaviour
 {
-    public void StartBtn(int scene)
+    [SerializeField] GameObject configPanel;
+ 
+    
+
+ public void startBtn()
     {
-        SceneManager.LoadScene(scene);
+        configPanel.SetActive(true);
+    }
+       
+    public void ShowConfigPanel()
+    {
+       configPanel.SetActive(true);
+    }
+
+    public void HideConfigPanel()
+    { 
+         configPanel.SetActive(false);
     }
 }
