@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     private Enemy _enemy;
     private UIManager _uiManager;
     public InGamePhase _gamePhase;
-    private SceneDivision _currentScene;
+    public SceneDivision CurrentScene;
     public Coroutine _coroutine;
     public bool Hit = false;
     public bool Miss = false;
@@ -33,25 +33,13 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        //後でswitchに入れてエラー対策行う
-        _player = FindAnyObjectByType<Player>();
-        _enemy = FindAnyObjectByType<Enemy>();
-        _uiManager = FindAnyObjectByType<UIManager>();
-
-        _gamePhase = InGamePhase.Start;
-        _currentScene = SceneDivision.InGame;
-        _uiManager.ResetState();
-        _special = false;
-        _isPanel = false;
-        _changeBGM=false;
-        PlayerWin = false;
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        switch (_currentScene)
+        switch (CurrentScene)
         {
             case SceneDivision.Title://タイトルシーンで実行したいこと
 
@@ -99,7 +87,7 @@ public class GameManager : MonoBehaviour
                             {
                                 AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Finish);
                                 _gamePhase = InGamePhase.Start;
-                                _currentScene = SceneDivision.Result;
+                                CurrentScene = SceneDivision.Result;
                                 PlayerWin = true;
                             }
                         }
@@ -128,7 +116,7 @@ public class GameManager : MonoBehaviour
                                 {
                                     AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Finish);
                                     _gamePhase = InGamePhase.Start;
-                                    _currentScene = SceneDivision.Result;
+                                    CurrentScene = SceneDivision.Result;
                                     PlayerWin = false;
                                 }
                             }
@@ -151,7 +139,7 @@ public class GameManager : MonoBehaviour
                             {
                                 AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Finish);
                                 _gamePhase = InGamePhase.Start;
-                                _currentScene = SceneDivision.Result;
+                                CurrentScene = SceneDivision.Result;
                                 PlayerWin = true;
                             }
                         }
@@ -169,6 +157,7 @@ public class GameManager : MonoBehaviour
                     break;
                     case InGamePhase.Direction://演出中
                         _uiManager.TimerChecker(true);
+                        _gamePhase = InGamePhase.Start;
                         break;
                 }
             break;
@@ -180,5 +169,17 @@ public class GameManager : MonoBehaviour
                 }
             break;
         }
+    }
+    public void SetScript()
+    {
+        _player = FindAnyObjectByType<Player>();
+        _enemy = FindAnyObjectByType<Enemy>();
+        _uiManager = FindAnyObjectByType<UIManager>();
+        _uiManager.ResetState();
+        _gamePhase = InGamePhase.Start;
+        _special = false;
+        _isPanel = false;
+        _changeBGM = false;
+        PlayerWin = false;
     }
 }

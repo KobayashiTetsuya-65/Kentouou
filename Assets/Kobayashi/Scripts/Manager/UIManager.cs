@@ -53,6 +53,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private RectTransform _weakPanelErtr;
     [Tooltip("自分弱点パネル"),SerializeField] private GameObject _weakPointPanelP;
     [SerializeField] private RectTransform _weakPanelPrtr;
+    [Tooltip("勝利パネル"), SerializeField] private GameObject _winPanel;
+    [Tooltip("敗北パネル"), SerializeField] private GameObject _losePanel;
+    [Tooltip("フェードパネル"),SerializeField] private Image _fadePanel;
 
     [Header("生成物")]
     [Tooltip("弱点画像"), SerializeField] private GameObject _weakPointPrefab;
@@ -73,6 +76,11 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         InGamePanel(true);
+        _fadePanel.gameObject.SetActive(true);
+        _fadePanel.color = new Color(0f, 0f, 0f, 1f);
+        _fadePanel.DOFade(0f, 0.4f)
+            .OnComplete(() => _fadePanel.gameObject.SetActive(false));
+        GameManager.Instance.SetScript();
     }
     /// <summary>
     /// UIをリセット
@@ -85,6 +93,8 @@ public class UIManager : MonoBehaviour
         _HPBarE.HPBarReset();
         InGameStart(false);
         _countDownPanel.SetActive(false);
+        _winPanel.SetActive(false);
+        _losePanel.SetActive(false);
         foreach(var count in _countDownTexts)
         {
             count.gameObject.SetActive(false);
@@ -246,21 +256,23 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public IEnumerator FinishInGame(bool playerWin)
     {
-        if(_special != null) Destroy(_special);
         if(_bigWeakPoint != null) Destroy(_bigWeakPoint);
         //終了演出
         yield return new WaitForSeconds(0.2f);
-        if(playerWin == true)
+        if (_special != null) Destroy(_special);
+        if (playerWin == true)
         {
             foreach(var loser in _enemyLoser)
             {
                 _enemyImage.sprite = loser;
                 yield return new WaitForSeconds(0.4f);
+                if (_special != null) Destroy(_special);
             }
             foreach(var winner in _playerWinner)
             {
                 _playerImage.sprite = winner;
                 yield return new WaitForSeconds(0.7f);
+                if (_special != null) Destroy(_special);
             }
         }
         else
@@ -269,14 +281,25 @@ public class UIManager : MonoBehaviour
             {
                 _playerImage.sprite = loser;
                 yield return new WaitForSeconds(0.4f);
+                if (_special != null) Destroy(_special);
             }
             foreach (var winner in _enemyWinner)
             {
                 _enemyImage.sprite = winner;
                 yield return new WaitForSeconds(0.7f);
+                if (_special != null) Destroy(_special);
             }
         }
+        if (_special != null) Destroy(_special);
         yield return new WaitForSeconds(2);
         InGamePanel(false);
+        if(playerWin == true)
+        {
+            _winPanel.gameObject.SetActive(true);
+        }
+        else
+        {
+            _losePanel.gameObject.SetActive(true);
+        }
     }
 }
