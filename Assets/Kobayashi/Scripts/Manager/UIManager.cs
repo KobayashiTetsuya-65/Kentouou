@@ -53,6 +53,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private RectTransform _weakPanelErtr;
     [Tooltip("自分弱点パネル"),SerializeField] private GameObject _weakPointPanelP;
     [SerializeField] private RectTransform _weakPanelPrtr;
+    [Tooltip("勝利パネル"), SerializeField] private GameObject _winPanel;
+    [Tooltip("敗北パネル"), SerializeField] private GameObject _losePanel;
 
     [Header("生成物")]
     [Tooltip("弱点画像"), SerializeField] private GameObject _weakPointPrefab;
@@ -73,6 +75,8 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         InGamePanel(true);
+
+        GameManager.Instance.SetScript();
     }
     /// <summary>
     /// UIをリセット
@@ -85,6 +89,8 @@ public class UIManager : MonoBehaviour
         _HPBarE.HPBarReset();
         InGameStart(false);
         _countDownPanel.SetActive(false);
+        _winPanel.SetActive(false);
+        _losePanel.SetActive(false);
         foreach(var count in _countDownTexts)
         {
             count.gameObject.SetActive(false);
@@ -278,5 +284,13 @@ public class UIManager : MonoBehaviour
         }
         yield return new WaitForSeconds(2);
         InGamePanel(false);
+        if(playerWin == true)
+        {
+            _winPanel.gameObject.SetActive(true);
+        }
+        else
+        {
+            _losePanel.gameObject.SetActive(true);
+        }
     }
 }
