@@ -1,23 +1,34 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
+using TMPro;
 
 public class CreditButton : MonoBehaviour
 {
-    [SerializeField] GameObject configPanel;
+    [SerializeField] Image _panel;
+    [SerializeField] Image _panelButton;
+    [SerializeField] Button _button;
+    [SerializeField] float _duration = 0.2f;
+    [SerializeField] bool _show;
 
-    public void startBtn()
+    private void Start()
     {
-        configPanel.SetActive(true);
+        _button.onClick.AddListener(ShowConfigPanel);
     }
-
-    public void ShowConfigPanel()
+    void ShowConfigPanel()
     {
-        configPanel.SetActive(true);
-    }
-
-    public void HideConfigPanel()
-    {
-        configPanel.SetActive(false);
+        if (_show)
+        {
+            _panel.DOFade(0.5f, _duration)
+                .OnComplete(() => _panel.gameObject.SetActive(_show));
+            _panelButton.gameObject.SetActive(!_show);
+        }
+        else
+        {
+            Sequence seq = DOTween.Sequence();
+            seq.Append(_panel.DOFade(0f, _duration));
+            seq.AppendCallback(() => _panel.gameObject.SetActive(_show));
+            seq.AppendCallback(() => _panelButton.gameObject.SetActive(!_show));
+        }
     }
 }
