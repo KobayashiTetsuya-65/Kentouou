@@ -256,21 +256,23 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public IEnumerator FinishInGame(bool playerWin)
     {
-        if(_special != null) Destroy(_special);
         if(_bigWeakPoint != null) Destroy(_bigWeakPoint);
         //èIóπââèo
         yield return new WaitForSeconds(0.2f);
-        if(playerWin == true)
+        if (_special != null) Destroy(_special);
+        if (playerWin == true)
         {
             foreach(var loser in _enemyLoser)
             {
                 _enemyImage.sprite = loser;
                 yield return new WaitForSeconds(0.4f);
+                if (_special != null) Destroy(_special);
             }
             foreach(var winner in _playerWinner)
             {
                 _playerImage.sprite = winner;
                 yield return new WaitForSeconds(0.7f);
+                if (_special != null) Destroy(_special);
             }
         }
         else
@@ -279,13 +281,16 @@ public class UIManager : MonoBehaviour
             {
                 _playerImage.sprite = loser;
                 yield return new WaitForSeconds(0.4f);
+                if (_special != null) Destroy(_special);
             }
             foreach (var winner in _enemyWinner)
             {
                 _enemyImage.sprite = winner;
                 yield return new WaitForSeconds(0.7f);
+                if (_special != null) Destroy(_special);
             }
         }
+        if (_special != null) Destroy(_special);
         yield return new WaitForSeconds(2);
         InGamePanel(false);
         if(playerWin == true)
