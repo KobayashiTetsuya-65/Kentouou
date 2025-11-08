@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         switch (CurrentScene)
         {
             case SceneDivision.Title://タイトルシーンで実行したいこと
-
+                AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.Title);
             break;
             case SceneDivision.InGame://インゲームシーンで実行したいこと
                 switch (_gamePhase)
@@ -50,7 +50,6 @@ public class GameManager : MonoBehaviour
                     case InGamePhase.Start:
                         if (!_changeBGM)
                         {
-                            AudioManager.Instance.StopBGM();
                             AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.InGame);
                             _changeBGM = true;
                         }
