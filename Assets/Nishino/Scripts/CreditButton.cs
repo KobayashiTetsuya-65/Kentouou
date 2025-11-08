@@ -21,14 +21,16 @@ public class CreditButton : MonoBehaviour
         {
             _panel.DOFade(0.5f, _duration)
                 .OnComplete(() => _panel.gameObject.SetActive(_show));
-            _panelButton.gameObject.SetActive(!_show);
+            if(_panelButton != null)
+                _panelButton.gameObject.SetActive(!_show);
         }
         else
         {
             Sequence seq = DOTween.Sequence();
             seq.Append(_panel.DOFade(0f, _duration));
             seq.AppendCallback(() => _panel.gameObject.SetActive(_show));
-            seq.AppendCallback(() => _panelButton.gameObject.SetActive(!_show));
+            if (_panelButton != null)
+                seq.AppendCallback(() => _panelButton.gameObject.SetActive(!_show));
         }
     }
 }
