@@ -55,6 +55,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private RectTransform _weakPanelPrtr;
     [Tooltip("勝利パネル"), SerializeField] private GameObject _winPanel;
     [Tooltip("敗北パネル"), SerializeField] private GameObject _losePanel;
+    [Tooltip("フェードパネル"),SerializeField] private Image _fadePanel;
 
     [Header("生成物")]
     [Tooltip("弱点画像"), SerializeField] private GameObject _weakPointPrefab;
@@ -75,7 +76,10 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         InGamePanel(true);
-
+        _fadePanel.gameObject.SetActive(true);
+        _fadePanel.color = new Color(0f, 0f, 0f, 1f);
+        _fadePanel.DOFade(0f, 0.4f)
+            .OnComplete(() => _fadePanel.gameObject.SetActive(false));
         GameManager.Instance.SetScript();
     }
     /// <summary>
