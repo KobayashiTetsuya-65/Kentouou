@@ -161,7 +161,6 @@ public class GameManager : MonoBehaviour
                     break;
                     case InGamePhase.Direction://‰‰o’†
                         _uiManager.TimerChecker(true);
-                        _gamePhase = InGamePhase.Start;
                         break;
                 }
             break;

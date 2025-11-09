@@ -1159,7 +1159,7 @@ Canvas:
   m_GameObject: {fileID: 575160065}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 1974500698}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -2960,6 +2960,8 @@ MonoBehaviour:
   _bgmSource: {fileID: 1384066617}
   _seRoot: {fileID: 0}
   _sePoolSize: 20
+  _mixer: {fileID: 0}
+  _seGroup: {fileID: 0}
 --- !u!1 &1434695025
 GameObject:
   m_ObjectHideFlags: 0
