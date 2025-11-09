@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     private bool _weakPoint = false;
     private bool _enemyWeak;
     private bool _isPanel = false;
+    private bool _titleBGM = false;
     public bool _spcialCreate = false;
     public float Damage;
     private float _point;
@@ -42,7 +43,11 @@ public class GameManager : MonoBehaviour
         switch (CurrentScene)
         {
             case SceneDivision.Title://タイトルシーンで実行したいこと
-                AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.Title);
+                if (!_titleBGM)
+                {
+                    AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.Title);
+                    _titleBGM = true;
+                }
             break;
             case SceneDivision.InGame://インゲームシーンで実行したいこと
                 switch (_gamePhase)
@@ -180,5 +185,6 @@ public class GameManager : MonoBehaviour
         _isPanel = false;
         _changeBGM = false;
         PlayerWin = false;
+        _titleBGM = false;
     }
 }

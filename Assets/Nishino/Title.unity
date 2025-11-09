@@ -2506,10 +2506,10 @@ AudioSource:
   m_GameObject: {fileID: 1000714732}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: d676efd3571b85c40b4cdf821dd98e72, type: 2}
+  OutputAudioMixerGroup: {fileID: -8410063326430615577, guid: d676efd3571b85c40b4cdf821dd98e72, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -3323,7 +3323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a869085682580e4a9312dffe70a310c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MouseSensitivity
-  sensitivitySlider: {fileID: 0}
+  sensitivitySlider: {fileID: 1091125737}
   sensitivity: 1
 --- !u!1 &1585982254
 GameObject:

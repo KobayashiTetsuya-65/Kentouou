@@ -52,8 +52,9 @@ public class AudioManager : MonoBehaviour
         {
             var instance = new GameObject("SeAudioSource_" + i, typeof(AudioSource));
             instance.transform.SetParent(_seRoot);
-            var audioSource = instance.AddComponent<AudioSource>();
+            var audioSource = instance.GetComponent<AudioSource>();
             audioSource.outputAudioMixerGroup = _seGroup;
+            audioSource.playOnAwake = false;
             instance.gameObject.SetActive(false);
             _seAudioSourcePools.Enqueue(audioSource);
         }
@@ -125,7 +126,7 @@ public class AudioManager : MonoBehaviour
         {
             if (PlayerPrefs.HasKey(p))
             {
-                float v = PlayerPrefs.GetFloat(p);
+                float v = PlayerPrefs.GetFloat(p,1f);
                 float dB = Mathf.Log10(Mathf.Clamp(v, 0.0001f, 1f)) * 20f;
                 _mixer.SetFloat(p, dB);
             }
