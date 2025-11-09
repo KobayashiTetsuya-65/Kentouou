@@ -20,6 +20,7 @@ public static class SoundDataUtility
 
         public static class Bgm
         {
+            public static readonly string Title = "Title";
             public static readonly string InGame = "InGame";
         }
     }

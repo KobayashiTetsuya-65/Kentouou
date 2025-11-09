@@ -9,26 +9,27 @@ public class MouseSlider : MonoBehaviour
     [Header("現在の感度")]
     public float sensitivity = 1f;
 
+    private float savedValue;
+
     private void Start()
     {
         if (sensitivitySlider != null)
         {
-            // 🔹イベントを最初に登録
-            sensitivitySlider.onValueChanged.AddListener(OnSensitivityChanged);
+            savedValue = PlayerPrefs.GetFloat("MouseSensitivity", 1f);
+            sensitivitySlider.SetValueWithoutNotify(savedValue);
+            OnSensitivityChanged(savedValue);
 
-            // 🔹スライダーの現在値を反映
-            OnSensitivityChanged(sensitivitySlider.value);
-        }
-        else
-        {
-            Debug.LogWarning("感度変更");
+            sensitivitySlider.onValueChanged.AddListener((value) =>
+            {
+                OnSensitivityChanged(value);
+                PlayerPrefs.SetFloat("MouseSensitivity", value);
+                PlayerPrefs.Save();
+            });
         }
     }
 
-    // 🔹この関数の形が超重要！
-    public void OnSensitivityChanged(float value)
+    private void OnSensitivityChanged(float value)
     {
         sensitivity = value;
-        Debug.Log("感度変更: " + sensitivity);
     }
 }
