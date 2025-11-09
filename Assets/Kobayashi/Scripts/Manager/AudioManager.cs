@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 
 public class AudioManager : MonoBehaviour
@@ -19,6 +20,12 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private int _sePoolSize = 10;
 
+    [SerializeField]
+    private AudioMixer _mixer;
+
+    [SerializeField] 
+    private AudioMixerGroup _seGroup;
+
     private readonly Queue<AudioSource> _seAudioSourcePools = new Queue<AudioSource>();
 
     private void Awake()
@@ -31,6 +38,7 @@ public class AudioManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        LoadVolume();
     }
 
     private void Start()
@@ -44,8 +52,10 @@ public class AudioManager : MonoBehaviour
         {
             var instance = new GameObject("SeAudioSource_" + i, typeof(AudioSource));
             instance.transform.SetParent(_seRoot);
+            var audioSource = instance.AddComponent<AudioSource>();
+            audioSource.outputAudioMixerGroup = _seGroup;
             instance.gameObject.SetActive(false);
-            _seAudioSourcePools.Enqueue(instance.GetComponent<AudioSource>());
+            _seAudioSourcePools.Enqueue(audioSource);
         }
 
     }
@@ -104,7 +114,23 @@ public class AudioManager : MonoBehaviour
         seAudioSource.Play();
         StartCoroutine(ReturnToPoolAfterPlaying(seAudioSource));
     }
+    /// <summary>
+    /// ï€ë∂Ç≥ÇÍÇΩâπó Çì«Ç›çûÇﬁ
+    /// </summary>
+    private void LoadVolume()
+    {
+        string[] parameters = { "Master", "BGM", "SE" };
 
+        foreach (var p in parameters)
+        {
+            if (PlayerPrefs.HasKey(p))
+            {
+                float v = PlayerPrefs.GetFloat(p);
+                float dB = Mathf.Log10(Mathf.Clamp(v, 0.0001f, 1f)) * 20f;
+                _mixer.SetFloat(p, dB);
+            }
+        }
+    }
     private IEnumerator ReturnToPoolAfterPlaying(AudioSource source)
     {
         yield return new WaitWhile(() => source.isPlaying);
