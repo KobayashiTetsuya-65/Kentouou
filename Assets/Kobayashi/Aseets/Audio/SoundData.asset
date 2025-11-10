@@ -79,3 +79,9 @@ MonoBehaviour:
     _playOnAwake: 0
     _volume: 1
     _clip: {fileID: 8300000, guid: 4b1e3ca6f6151cc468bf1615bb1a651a, type: 3}
+  - _key: Click
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 0
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 9148bf9aa68acda47ac087e8c4656db3, type: 3}

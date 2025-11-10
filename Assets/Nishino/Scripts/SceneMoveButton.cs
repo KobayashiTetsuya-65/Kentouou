@@ -22,6 +22,7 @@ public class SceneMoveButton : MonoBehaviour
     void SceneChange()
     {
         if (_push)return;
+        AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Click);
         _image.gameObject.SetActive(true);
         _image.DOFade(1f, _duration)
             .OnComplete(() =>

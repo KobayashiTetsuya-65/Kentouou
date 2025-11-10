@@ -17,6 +17,7 @@ public class CreditButton : MonoBehaviour
     }
     void ShowConfigPanel()
     {
+        AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Click);
         if (_show)
         {
             _panel.DOFade(0.5f, _duration)
