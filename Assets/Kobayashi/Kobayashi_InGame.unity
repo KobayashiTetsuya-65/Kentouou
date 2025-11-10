@@ -1159,7 +1159,7 @@ Canvas:
   m_GameObject: {fileID: 575160065}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 1974500698}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -2960,6 +2960,8 @@ MonoBehaviour:
   _bgmSource: {fileID: 1384066617}
   _seRoot: {fileID: 0}
   _sePoolSize: 20
+  _mixer: {fileID: 0}
+  _seGroup: {fileID: 0}
 --- !u!1 &1434695025
 GameObject:
   m_ObjectHideFlags: 0
@@ -5195,6 +5197,10 @@ PrefabInstance:
     - target: {fileID: 5668034945804021097, guid: 2778573ff7d11a941a21473e74e3e35d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899928771737788815, guid: 2778573ff7d11a941a21473e74e3e35d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6922872089140423027, guid: 2778573ff7d11a941a21473e74e3e35d, type: 3}
       propertyPath: m_Name
