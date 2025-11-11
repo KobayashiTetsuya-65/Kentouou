@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2811889609828221573}
   - component: {fileID: 3414749990105105925}
   m_Layer: 5
-  m_Name: WeakPoint
+  m_Name: WeakPoint 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,14 +59,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 60f8cab0c90c5fe4f8dfa72405e18b07, type: 3}
+  m_Texture: {fileID: 2800000, guid: 1687f3b51268b264d8d63acb1d17e687, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0

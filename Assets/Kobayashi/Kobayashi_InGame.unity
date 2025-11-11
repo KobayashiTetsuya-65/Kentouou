@@ -3899,7 +3899,8 @@ MonoBehaviour:
   _winPanel: {fileID: 1204687505}
   _losePanel: {fileID: 843504232}
   _fadePanel: {fileID: 1517194807}
-  _weakPointPrefab: {fileID: 3652535549966117325, guid: 46f4482dbc0e0e943849556e017503c3, type: 3}
+  _weakPointPrefab: {fileID: 3652535549966117325, guid: d118032845526a84e9243540d241e4dd, type: 3}
+  _weakPointPrefabS: {fileID: 3652535549966117325, guid: 46f4482dbc0e0e943849556e017503c3, type: 3}
   _weakTimerPrefab: {fileID: 204426779338913081, guid: ae6c07f0f5678b447bc5a6b495717c61, type: 3}
   _gaugePrefab: {fileID: 864026114424179727, guid: b1de4ece3d71b634fa39f1b35d86245b, type: 3}
   _specialWeakPointPrefab: {fileID: 6205749160157608341, guid: 1c3f047af4834bc48bd387d84093a2c7, type: 3}
@@ -4576,7 +4577,7 @@ RectTransform:
   m_GameObject: {fileID: 1838189656}
   m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.6, y: 1.3, z: 1.3}
+  m_LocalScale: {x: 1.8, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1053504360}
