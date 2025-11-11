@@ -16,6 +16,7 @@ public static class SoundDataUtility
             public static readonly string Biribiri = "Biribiri";
             public static readonly string Charge = "Charge";
             public static readonly string Click = "Click";
+            public static readonly string Special = "Special";
         }
 
         public static class Bgm
