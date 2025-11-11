@@ -1,4 +1,3 @@
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public static class SoundDataUtility
@@ -16,6 +15,7 @@ public static class SoundDataUtility
             public static readonly string UseSpecial = "UseSpecial";
             public static readonly string Biribiri = "Biribiri";
             public static readonly string Charge = "Charge";
+            public static readonly string Click = "Click";
         }
 
         public static class Bgm

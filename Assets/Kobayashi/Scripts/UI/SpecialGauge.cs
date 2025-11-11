@@ -14,7 +14,6 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
     [Header("数値設定")]
     [Tooltip("最初の透明度"), SerializeField, Range(0f, 1f)] private float _alphaStart = 0.2f;
     [Tooltip("クリック回数"), SerializeField, Range(1,10)] private int _maxClick = 5;
-    [Tooltip("壊れるまでの秒数"), SerializeField] private float _duration = 0.5f;
     [Tooltip("自壊するまでの時間"),SerializeField] private float _timer = 10;
     [Header("範囲設定")]
     [SerializeField] private float _minX = -750f;
