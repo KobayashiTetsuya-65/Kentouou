@@ -219,6 +219,7 @@ public class UIManager : MonoBehaviour
     public IEnumerator CreateSpecialGauge()
     {
         yield return new WaitForSeconds(_timer);
+        if(GameManager.Instance._gamePhase == InGamePhase.Chose)
         _special = Instantiate(_gaugePrefab);
         _special.transform.SetParent(_canvas.transform,false);
         Debug.Log("必殺ゲージ出現！！");
