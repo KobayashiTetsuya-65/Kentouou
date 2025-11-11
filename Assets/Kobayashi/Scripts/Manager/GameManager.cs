@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     private Player _player;
     private Enemy _enemy;
     private UIManager _uiManager;
-    public InGamePhase _gamePhase;
+    public InGamePhase GamePhase;
     public SceneDivision CurrentScene;
     public Coroutine _coroutine;
     public bool Hit = false;
@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     private bool _enemyWeak;
     private bool _isPanel = false;
     private bool _titleBGM = false;
+    private bool _isFirstStage = true;
     public bool _spcialCreate = false;
     public float Damage;
     private float _point;
@@ -50,7 +51,7 @@ public class GameManager : MonoBehaviour
                 }
             break;
             case SceneDivision.InGame://ÉCÉìÉQÅ[ÉÄÉVÅ[ÉìÇ≈é¿çsÇµÇΩÇ¢Ç±Ç∆
-                switch (_gamePhase)
+                switch (GamePhase)
                 {
                     case InGamePhase.Start:
                         if (!_changeBGM)
@@ -60,7 +61,7 @@ public class GameManager : MonoBehaviour
                         }
                         if (Input.GetMouseButtonDown(0))
                         {
-                            _gamePhase = InGamePhase.CountDown;
+                            GamePhase = InGamePhase.CountDown;
                             _uiManager.InGameStart(true);
                             _player.PlayerStateReset();
                             _enemy.EnemyStateReset();
@@ -90,7 +91,7 @@ public class GameManager : MonoBehaviour
                             if(_enemy.EnemyCurrentHP <= 0)//èüóòéû
                             {
                                 AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Finish);
-                                _gamePhase = InGamePhase.Start;
+                                GamePhase = InGamePhase.Start;
                                 CurrentScene = SceneDivision.Result;
                                 PlayerWin = true;
                             }
@@ -119,7 +120,7 @@ public class GameManager : MonoBehaviour
                                 if (_player.PlayerCurrentHP <= 0)//îsñkéû
                                 {
                                     AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Finish);
-                                    _gamePhase = InGamePhase.Start;
+                                    GamePhase = InGamePhase.Start;
                                     CurrentScene = SceneDivision.Result;
                                     PlayerWin = false;
                                 }
@@ -142,14 +143,14 @@ public class GameManager : MonoBehaviour
                             if (_enemy.EnemyCurrentHP <= 0)//èüóòéû
                             {
                                 AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Finish);
-                                _gamePhase = InGamePhase.Start;
+                                GamePhase = InGamePhase.Start;
                                 CurrentScene = SceneDivision.Result;
                                 PlayerWin = true;
                             }
                         }
                         if (IsSpecialFinish)//ïKéEãZèIóπéûÇÃèàóù
                         {
-                            _gamePhase = InGamePhase.Chose;
+                            GamePhase = InGamePhase.Chose;
                             _uiManager.ResetCharactorSprite();
                             _weakPoint = false;
                             _spcialCreate = false;
@@ -161,6 +162,12 @@ public class GameManager : MonoBehaviour
                     break;
                     case InGamePhase.Direction://ââèoíÜ
                         _uiManager.TimerChecker(true);
+                    break;
+                    case InGamePhase.Explanation:
+                        if (_isFirstStage)
+                        {
+                            _uiManager.RuleExplanation();
+                        }
                         break;
                 }
             break;
@@ -179,7 +186,7 @@ public class GameManager : MonoBehaviour
         _enemy = FindAnyObjectByType<Enemy>();
         _uiManager = FindAnyObjectByType<UIManager>();
         _uiManager.ResetState();
-        _gamePhase = InGamePhase.Start;
+        GamePhase = InGamePhase.Explanation;
         _special = false;
         _isPanel = false;
         _changeBGM = false;
