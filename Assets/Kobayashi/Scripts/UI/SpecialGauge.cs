@@ -37,6 +37,20 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
         _randomY = Random.Range(_minY, _maxY);
         _gauge.anchoredPosition = new Vector2(_randomX, _randomY);
         _isAction = false;
+        _gaugeFront.transform.localScale = Vector3.zero;
+        _gaugeBack.transform.localScale = Vector3.zero;
+        _gaugeFront.transform.DOScale(Vector3.one * 1.2f, 0.3f)
+            .SetEase(Ease.OutBack)
+            .OnComplete(() =>
+            {
+                _gaugeFront.transform.DOScale(Vector3.one, 0.1f);
+            });
+        _gaugeBack.transform.DOScale(Vector3.one * 1.2f, 0.3f)
+            .SetEase(Ease.OutBack)
+            .OnComplete(() =>
+            {
+                _gaugeBack.transform.DOScale(Vector3.one, 0.1f);
+            });
         AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Special);
     }
     public void OnPointerClick(PointerEventData eventData)
