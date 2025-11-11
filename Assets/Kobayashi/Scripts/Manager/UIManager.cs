@@ -58,7 +58,8 @@ public class UIManager : MonoBehaviour
     [Tooltip("フェードパネル"),SerializeField] private Image _fadePanel;
 
     [Header("生成物")]
-    [Tooltip("弱点画像"), SerializeField] private GameObject _weakPointPrefab;
+    [Tooltip("弱点画像(拳)"), SerializeField] private GameObject _weakPointPrefab;
+    [Tooltip("弱点画像(盾)"), SerializeField] private GameObject _weakPointPrefabS;
     [Tooltip("弱点タイマー"), SerializeField] private GameObject _weakTimerPrefab;
     [Tooltip("必殺ゲージ"), SerializeField] private GameObject _gaugePrefab;
     [Tooltip("必殺弱点"), SerializeField] private GameObject _specialWeakPointPrefab;
@@ -116,7 +117,7 @@ public class UIManager : MonoBehaviour
         else
         {
             _weakTimer = Instantiate(_weakTimerPrefab, _weakPointPanelP.transform);
-            _weakPoint = Instantiate(_weakPointPrefab,_weakPointPanelP.transform);
+            _weakPoint = Instantiate(_weakPointPrefabS,_weakPointPanelP.transform);
             _width = _weakPanelPrtr.rect.width;
             _height = _weakPanelPrtr.rect.height;
         }
