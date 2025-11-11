@@ -66,7 +66,7 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
     private IEnumerator BreakGauge()
     {
         StopAnimation();
-        GameManager.Instance._gamePhase = InGamePhase.Direction;
+        GameManager.Instance.GamePhase = InGamePhase.Direction;
         Sequence seq = DOTween.Sequence();
         AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Biribiri);
         for (int i = 0;i < _maxClick - 1; i++)
@@ -86,7 +86,7 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
         seq.Append(_gauge.DOScale(1f, 0.2f).SetEase(Ease.InOutCubic));
         yield return seq.WaitForCompletion();
         StopAnimation();
-        GameManager.Instance._gamePhase = InGamePhase.Attack;
+        GameManager.Instance.GamePhase = InGamePhase.Attack;
         _frontImage.DOFade(0f, 0.2f);
         _backImage.DOFade(0f, 0.2f);
         yield return new WaitForSeconds(0.3f);

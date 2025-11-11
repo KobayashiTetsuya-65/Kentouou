@@ -56,6 +56,7 @@ public class UIManager : MonoBehaviour
     [Tooltip("勝利パネル"), SerializeField] private GameObject _winPanel;
     [Tooltip("敗北パネル"), SerializeField] private GameObject _losePanel;
     [Tooltip("フェードパネル"),SerializeField] private Image _fadePanel;
+    [Tooltip("ルール説明パネル"),SerializeField] private GameObject[] _RuleExplanationPanels;
 
     [Header("生成物")]
     [Tooltip("弱点画像(拳)"), SerializeField] private GameObject _weakPointPrefab;
@@ -73,6 +74,7 @@ public class UIManager : MonoBehaviour
     private RectTransform _weakRect,_weakTimerRect;
     private GameObject _weakPoint,_weakTimer,_special,_bigWeakPoint;
     private float _width, _height, _randomX, _randomY;
+    private int _currentClick;
 
     private void Awake()
     {
@@ -82,6 +84,7 @@ public class UIManager : MonoBehaviour
         _fadePanel.DOFade(0f, 0.4f)
             .OnComplete(() => _fadePanel.gameObject.SetActive(false));
         GameManager.Instance.SetScript();
+        _currentClick = 0;
     }
     /// <summary>
     /// UIをリセット
@@ -183,7 +186,7 @@ public class UIManager : MonoBehaviour
         }
         _countDownTexts[_countDownTexts.Length - 1].gameObject.SetActive(false);
         _countDownPanel.SetActive(false);
-        GameManager.Instance._gamePhase = InGamePhase.Chose;
+        GameManager.Instance.GamePhase = InGamePhase.Chose;
     }
     /// <summary>
     /// 攻撃時のSprite入れ替え
@@ -220,7 +223,7 @@ public class UIManager : MonoBehaviour
     public IEnumerator CreateSpecialGauge()
     {
         yield return new WaitForSeconds(_timer);
-        if(GameManager.Instance._gamePhase == InGamePhase.Chose)
+        if(GameManager.Instance.GamePhase == InGamePhase.Chose)
         _special = Instantiate(_gaugePrefab);
         _special.transform.SetParent(_canvas.transform,false);
         Debug.Log("必殺ゲージ出現！！");
@@ -302,6 +305,25 @@ public class UIManager : MonoBehaviour
         else
         {
             _losePanel.gameObject.SetActive(true);
+        }
+    }
+    /// <summary>
+    /// ルール説明パネルの表示
+    /// </summary>
+    public void RuleExplanation()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            if(_currentClick != 0)
+            _RuleExplanationPanels[_currentClick - 1].SetActive(false);
+            if(_currentClick >= _RuleExplanationPanels.Length)
+            {
+                _currentClick = 0;
+                GameManager.Instance.GamePhase = InGamePhase.Start;
+                return;
+            }
+            _RuleExplanationPanels[_currentClick].SetActive(true);
+            _currentClick++;
         }
     }
 }
