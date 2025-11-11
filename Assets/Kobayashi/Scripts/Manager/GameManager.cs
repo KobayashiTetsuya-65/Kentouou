@@ -192,5 +192,7 @@ public class GameManager : MonoBehaviour
         _changeBGM = false;
         PlayerWin = false;
         _titleBGM = false;
+        Miss = false;
+        _weakPoint = false;
     }
 }
