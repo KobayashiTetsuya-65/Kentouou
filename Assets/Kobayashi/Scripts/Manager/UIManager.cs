@@ -352,16 +352,16 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if(_currentClick != 0)
+            _currentClick++;
             _RuleExplanationPanels[_currentClick - 1].SetActive(false);
-            if(_currentClick >= _RuleExplanationPanels.Length)
+            AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.TurnThePage);
+            if (_currentClick >= _RuleExplanationPanels.Length)
             {
                 _currentClick = 0;
                 GameManager.Instance.GamePhase = InGamePhase.Start;
                 return;
             }
             _RuleExplanationPanels[_currentClick].SetActive(true);
-            _currentClick++;
         }
     }
 }
