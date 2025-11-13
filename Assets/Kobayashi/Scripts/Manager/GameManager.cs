@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public SceneDivision CurrentScene;
     public Coroutine _coroutine;
     public bool Hit = false;
+    public bool Defence = false;
     public bool Miss = false;
     public bool IsSpecialFinish = false;
     public bool PlayerWin = false;
@@ -75,12 +76,10 @@ public class GameManager : MonoBehaviour
                         {
                             StartCoroutine(_uiManager.CreateSpecialGauge());
                             _spcialCreate = true;
-                            Debug.Log("•KE¶¬ƒtƒ‰ƒOONI");
                         }
                         if (Hit)//ã“_UŒ‚
                         {
                             AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Punch);
-                            Debug.Log("UŒ‚I");
                             if (_coroutine == null) _coroutine = StartCoroutine(_uiManager.AttackMotion(Hit));
                             _enemy.EnemyDamaged(Damage);
                             _uiManager.TimerChecker(true);
@@ -94,6 +93,16 @@ public class GameManager : MonoBehaviour
                                 PlayerWin = true;
                                 _uiManager.SpecialGaugePanel(false);
                             }
+                        }
+                        else if (Defence)//–hŒä¬Œ÷
+                        {
+                            //ì‚Á‚Ä‚é‚È‚¤
+                            AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Defence);
+                            if (_coroutine == null) _coroutine = StartCoroutine(_uiManager.DefenceMotion());
+                            _enemy.EnemyDamaged(Damage);
+                            _uiManager.TimerChecker(true);
+                            Defence = false;
+                            _weakPoint = false;
                         }
                         else
                         {

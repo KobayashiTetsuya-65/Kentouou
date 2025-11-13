@@ -3,10 +3,18 @@ using UnityEngine.EventSystems;
 
 public class WeakPoint : MonoBehaviour,IPointerClickHandler
 {
+    [SerializeField] private bool _isWeak;
     public int damage = 1;
     public void OnPointerClick(PointerEventData eventData)
     {
-        GameManager.Instance.Hit = true;
+        if (_isWeak)
+        {
+            GameManager.Instance.Hit = true;
+        }
+        else
+        {
+            GameManager.Instance.Defence = true;
+        }
         GameManager.Instance.Damage = damage;
         DestroyWeakPoint();
     }

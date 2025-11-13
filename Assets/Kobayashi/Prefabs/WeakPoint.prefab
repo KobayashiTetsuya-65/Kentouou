@@ -85,4 +85,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb0a8341c7de0a4489539654a8b7443d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeakPoint
-  damage: 10
+  _isWeak: 0
+  damage: 5

@@ -34,6 +34,9 @@ public class UIManager : MonoBehaviour
     [Tooltip("プレイヤーの攻撃"), SerializeField] private Sprite[] _attackPlayerSprits;
     [Tooltip("エネミーの攻撃"), SerializeField] private Sprite[] _attackEnemySprits;
 
+    [Header("防御モーション")]
+    [Tooltip("プレイヤーの防御"), SerializeField] private Sprite _defencePlayerSprite;
+
     [Header("被爆時の画像")]
     [Tooltip("プレイヤー"), SerializeField] private Sprite _damagedPlayerSprite;
     [Tooltip("エネミー"), SerializeField] private Sprite _damagedEnemySprite;
@@ -100,7 +103,15 @@ public class UIManager : MonoBehaviour
         _countDownPanel.SetActive(false);
         _winPanel.SetActive(false);
         _losePanel.SetActive(false);
-        foreach(var count in _countDownTexts)
+        foreach (GameObject rule in _RuleExplanationPanels)
+        {
+            rule.SetActive(false);
+        }
+        if (_RuleExplanationPanels[0] != null)
+        {
+            _RuleExplanationPanels[0].SetActive(true);
+        }
+        foreach(TextMeshProUGUI count in _countDownTexts)
         {
             count.gameObject.SetActive(false);
         }
@@ -217,6 +228,19 @@ public class UIManager : MonoBehaviour
         _enemyRectTr.anchoredPosition = enemyRect.anchoredPosition;
         GameManager.Instance._coroutine = null;
     }
+    public IEnumerator DefenceMotion()
+    {
+        int n = Random.Range(0, 2);
+        _playerImage.sprite = _defencePlayerSprite;
+        _enemyImage.sprite = _attackEnemySprits[n];
+        _enemyRectTr.anchoredPosition = Vector2.zero;
+        _enemyRectTr.anchoredPosition -= new Vector2(50, 0);
+        yield return new WaitForSeconds(_attackDuration);
+        _playerImage.sprite = _playerSprite;
+        _enemyImage.sprite = _enemySprites;
+        _enemyRectTr.anchoredPosition = enemyRect.anchoredPosition;
+        GameManager.Instance._coroutine = null;
+    }
     /// <summary>
     /// 時間経過でスペシャルゲージ生成
     /// </summary>
@@ -326,18 +350,18 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void RuleExplanation()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            if(_currentClick != 0)
+            _currentClick++;
             _RuleExplanationPanels[_currentClick - 1].SetActive(false);
-            if(_currentClick >= _RuleExplanationPanels.Length)
+            AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.TurnThePage);
+            if (_currentClick >= _RuleExplanationPanels.Length)
             {
                 _currentClick = 0;
                 GameManager.Instance.GamePhase = InGamePhase.Start;
                 return;
             }
             _RuleExplanationPanels[_currentClick].SetActive(true);
-            _currentClick++;
         }
     }
 }
