@@ -16,7 +16,6 @@ public class UIManager : MonoBehaviour
     [Tooltip("定位置"),SerializeField] private RectTransform playerRect;
     [Tooltip("定位置"),SerializeField] private RectTransform enemyRect;
 
-
     [Header("キャラクターイメージ")]
     [Tooltip("プレイヤー"),SerializeField] private Image _playerImage;
     [Tooltip("エネミー"),SerializeField] private Image _enemyImage;
@@ -57,6 +56,7 @@ public class UIManager : MonoBehaviour
     [Tooltip("敗北パネル"), SerializeField] private GameObject _losePanel;
     [Tooltip("フェードパネル"),SerializeField] private Image _fadePanel;
     [Tooltip("ルール説明パネル"),SerializeField] private GameObject[] _RuleExplanationPanels;
+    [Tooltip("必殺技ゲージパネル"), SerializeField] private GameObject _specialGaugePanel;
 
     [Header("生成物")]
     [Tooltip("弱点画像(拳)"), SerializeField] private GameObject _weakPointPrefab;
@@ -96,6 +96,7 @@ public class UIManager : MonoBehaviour
         _player.PlayerStateReset();
         _HPBarE.HPBarReset();
         InGameStart(false);
+        _specialGaugePanel.SetActive(false);
         _countDownPanel.SetActive(false);
         _winPanel.SetActive(false);
         _losePanel.SetActive(false);
@@ -224,17 +225,30 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(_timer);
         if(GameManager.Instance.GamePhase == InGamePhase.Chose)
-        _special = Instantiate(_gaugePrefab);
-        _special.transform.SetParent(_canvas.transform,false);
+        {
+            _special = Instantiate(_gaugePrefab);
+            _special.transform.SetParent(_canvas.transform, false);
+            SpecialGaugePanel(true);
+        }
         Debug.Log("必殺ゲージ出現！！");
+    }
+    /// <summary>
+    /// 必殺技縦型ゲージの表示
+    /// </summary>
+    /// <param name="show"></param>
+    public void SpecialGaugePanel(bool show)
+    {
+        _specialGaugePanel.SetActive(show);
     }
     /// <summary>
     /// 必殺技
     /// </summary>
     public void UseSpecial()
     {
+        SpecialGaugeVertical gauge = FindAnyObjectByType<SpecialGaugeVertical>();
         _bigWeakPoint = Instantiate(_specialWeakPointPrefab);
         _bigWeakPoint.transform.SetParent(_panel.transform,false);
+        gauge.DecreaseGauge();
         //演出
     }
     /// <summary>
