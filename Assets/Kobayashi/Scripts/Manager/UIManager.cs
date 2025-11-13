@@ -240,14 +240,15 @@ public class UIManager : MonoBehaviour
     {
         _specialGaugePanel.SetActive(show);
     }
-    
     /// <summary>
     /// •KE‹Z
     /// </summary>
     public void UseSpecial()
     {
+        SpecialGaugeVertical gauge = FindAnyObjectByType<SpecialGaugeVertical>();
         _bigWeakPoint = Instantiate(_specialWeakPointPrefab);
         _bigWeakPoint.transform.SetParent(_panel.transform,false);
+        gauge.DecreaseGauge();
         //‰‰o
     }
     /// <summary>

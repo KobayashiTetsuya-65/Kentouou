@@ -32,7 +32,7 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
         _frontImage = _gaugeFront.GetComponent<Image>();
         _verticalGauge = FindAnyObjectByType<SpecialGaugeVertical>();
         _backImage.color = new Color(1,1,1,_alphaStart);
-        _frontImage.fillAmount = 0;
+        _frontImage.fillAmount = 1;
         _increase = 1f / (float)_maxClick;
         StartCoroutine(BreakTimer());
         _randomX = Random.Range(_minX, _maxX);
@@ -58,7 +58,6 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         _currentClick++;
-        _frontImage.fillAmount += _increase;
         _verticalGauge.ValueChange(_increase);
         if (!_isAction)
         {
