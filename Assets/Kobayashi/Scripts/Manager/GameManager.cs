@@ -92,6 +92,7 @@ public class GameManager : MonoBehaviour
                                 GamePhase = InGamePhase.Start;
                                 CurrentScene = SceneDivision.Result;
                                 PlayerWin = true;
+                                _uiManager.SpecialGaugePanel(false);
                             }
                         }
                         else
@@ -121,6 +122,7 @@ public class GameManager : MonoBehaviour
                                     GamePhase = InGamePhase.Start;
                                     CurrentScene = SceneDivision.Result;
                                     PlayerWin = false;
+                                    _uiManager.SpecialGaugePanel(false);
                                 }
                             }
                         }
@@ -144,12 +146,14 @@ public class GameManager : MonoBehaviour
                                 GamePhase = InGamePhase.Start;
                                 CurrentScene = SceneDivision.Result;
                                 PlayerWin = true;
+                                _uiManager.SpecialGaugePanel(false);
                             }
                         }
                         if (IsSpecialFinish)//ïKéEãZèIóπéûÇÃèàóù
                         {
                             GamePhase = InGamePhase.Chose;
                             _uiManager.ResetCharactorSprite();
+                            _uiManager.SpecialGaugePanel(false);
                             _weakPoint = false;
                             _spcialCreate = false;
                             _special = false;
