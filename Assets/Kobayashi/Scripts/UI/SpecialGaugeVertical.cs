@@ -129,5 +129,6 @@ public class SpecialGaugeVertical : MonoBehaviour
         _rainbowTween?.Kill();
         _brightnessTween?.Kill();
         _fillImage.color = _purple;
+        _img.color = Color.white;
     }
 }
