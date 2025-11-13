@@ -1003,8 +1003,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294902014
-  m_fontColor: {r: 0.9951782, g: 0, b: 1, a: 1}
+    rgba: 4278230783
+  m_fontColor: {r: 1, g: 0.6200636, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5307,14 +5307,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.9963031, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2415134971982548811, guid: a7d1d5e1fbe233f42b288c6f6c466aed, type: 3}
+  m_Sprite: {fileID: 3756621841161090220, guid: a80317c27d912ea45b2cbae27c0967d6, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5496,7 +5496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 691e9562102eb2c49b4ddaf73f9fc79e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpecialGaugeVertical
-  _obj: {fileID: 1265575962}
+  _img: {fileID: 1265575964}
   _fillImage: {fileID: 2113072923}
   _duration: 0.4
   _specialTime: 7
