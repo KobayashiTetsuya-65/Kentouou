@@ -114,10 +114,34 @@ MonoBehaviour:
     _isLoop: 0
     _playOnAwake: 0
     _volume: 1
-    _clip: {fileID: 8300000, guid: 74a8df2c82595f144b5c776973474438, type: 3}
+    _clip: {fileID: 8300000, guid: 5680bca4f04a3784298ba70a135a9eab, type: 3}
   - _key: FallDown
     _type: 1
     _isLoop: 0
     _playOnAwake: 0
     _volume: 1
     _clip: {fileID: 8300000, guid: dc6629acc336bf041b9a2072f76a48ed, type: 3}
+  - _key: Clap
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 0
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 9f8ba1107eddb8744b755e660d73a0bb, type: 3}
+  - _key: Cheers
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 0
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 3caa22cefdf6a27468ecc38867a2c479, type: 3}
+  - _key: Win
+    _type: 0
+    _isLoop: 1
+    _playOnAwake: 0
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 86d435135b9c8c54a955f73cb3f2126b, type: 3}
+  - _key: Lose
+    _type: 0
+    _isLoop: 1
+    _playOnAwake: 0
+    _volume: 1
+    _clip: {fileID: 8300000, guid: e2fb7e6cffae8284fb3c5c7496b601af, type: 3}

@@ -308,8 +308,6 @@ public class UIManager : MonoBehaviour
             foreach(var loser in _enemyLoser)
             {
                 _enemyImage.sprite = loser;
-                if (loser == _enemyLoser[1])
-                    AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.WomanScream);
                 if (loser == _enemyLoser[2])
                     AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.FallDown);
                 yield return new WaitForSeconds(0.4f);
@@ -319,6 +317,8 @@ public class UIManager : MonoBehaviour
             {
                 _playerImage.sprite = winner;
                 yield return new WaitForSeconds(0.7f);
+                if(winner == _playerWinner[0])
+                    AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.WomanScream);
                 if (_special != null) Destroy(_special);
             }
         }
@@ -344,13 +344,17 @@ public class UIManager : MonoBehaviour
         if (_special != null) Destroy(_special);
         yield return new WaitForSeconds(2);
         InGamePanel(false);
-        if(playerWin == true)
+        if(playerWin)
         {
             _winPanel.gameObject.SetActive(true);
+            AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Cheers);
+            AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.Win);
         }
         else
         {
             _losePanel.gameObject.SetActive(true);
+            AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Clap);
+            AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.Lose);
         }
     }
     /// <summary>
