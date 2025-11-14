@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 229494395}
   - component: {fileID: 229494394}
   - component: {fileID: 229494397}
+  - component: {fileID: 229494398}
   m_Layer: 5
   m_Name: CreditButton
   m_TagString: Untagged
@@ -394,6 +395,18 @@ MonoBehaviour:
   _button: {fileID: 229494394}
   _duration: 0.2
   _show: 1
+--- !u!114 &229494398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229494392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6048b0384e782e478c06e5a2f65ad95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorTrigger
 --- !u!1 &253619710
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,6 +420,7 @@ GameObject:
   - component: {fileID: 253619713}
   - component: {fileID: 253619712}
   - component: {fileID: 253619715}
+  - component: {fileID: 253619716}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -533,6 +547,18 @@ MonoBehaviour:
   _duration: 0.4
   _sceneName: Kobayashi_InGame
   _moveScene: 1
+--- !u!114 &253619716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253619710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6048b0384e782e478c06e5a2f65ad95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorTrigger
 --- !u!1 &284374937
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,6 +1052,7 @@ GameObject:
   - component: {fileID: 593341201}
   - component: {fileID: 593341200}
   - component: {fileID: 593341203}
+  - component: {fileID: 593341204}
   m_Layer: 5
   m_Name: SettingButton
   m_TagString: Untagged
@@ -1152,6 +1179,18 @@ MonoBehaviour:
   _button: {fileID: 593341200}
   _duration: 0.2
   _show: 1
+--- !u!114 &593341204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593341198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6048b0384e782e478c06e5a2f65ad95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorTrigger
 --- !u!1 &646315286
 GameObject:
   m_ObjectHideFlags: 0
@@ -1163,6 +1202,7 @@ GameObject:
   - component: {fileID: 646315287}
   - component: {fileID: 646315289}
   - component: {fileID: 646315288}
+  - component: {fileID: 646315290}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -1227,6 +1267,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 646315286}
   m_CullTransparentMesh: 1
+--- !u!114 &646315290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 646315286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6048b0384e782e478c06e5a2f65ad95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorTrigger
 --- !u!1 &709574833
 GameObject:
   m_ObjectHideFlags: 0
@@ -1343,6 +1395,7 @@ GameObject:
   - component: {fileID: 727687737}
   - component: {fileID: 727687739}
   - component: {fileID: 727687738}
+  - component: {fileID: 727687740}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -1407,6 +1460,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727687736}
   m_CullTransparentMesh: 1
+--- !u!114 &727687740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727687736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6048b0384e782e478c06e5a2f65ad95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorTrigger
 --- !u!1 &755504417
 GameObject:
   m_ObjectHideFlags: 0
@@ -1418,6 +1483,7 @@ GameObject:
   - component: {fileID: 755504418}
   - component: {fileID: 755504420}
   - component: {fileID: 755504419}
+  - component: {fileID: 755504421}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -1482,6 +1548,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 755504417}
   m_CullTransparentMesh: 1
+--- !u!114 &755504421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755504417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6048b0384e782e478c06e5a2f65ad95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorTrigger
 --- !u!1 &840413884
 GameObject:
   m_ObjectHideFlags: 0
@@ -2305,6 +2383,7 @@ MonoBehaviour:
   GamePhase: 0
   CurrentScene: 0
   Hit: 0
+  Defence: 0
   Miss: 0
   IsSpecialFinish: 0
   PlayerWin: 0
@@ -3047,6 +3126,7 @@ GameObject:
   - component: {fileID: 1656329689}
   - component: {fileID: 1656329688}
   - component: {fileID: 1656329691}
+  - component: {fileID: 1656329692}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -3173,6 +3253,18 @@ MonoBehaviour:
   _button: {fileID: 1656329688}
   _duration: 0.2
   _show: 0
+--- !u!114 &1656329692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656329686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6048b0384e782e478c06e5a2f65ad95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorTrigger
 --- !u!1 &1710221873
 GameObject:
   m_ObjectHideFlags: 0
@@ -4248,6 +4340,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 622028664059248974, guid: 7c3cc29916c6ecc4aaeebc35c90e7df9, type: 3}
+      propertyPath: _attackSprite
+      value: 
+      objectReference: {fileID: -5363199490917645521, guid: 10cc5bd5f00c55b4b8e4454fe5d0c078, type: 3}
+    - target: {fileID: 5121096630083790173, guid: 7c3cc29916c6ecc4aaeebc35c90e7df9, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 5121096630083790173, guid: 7c3cc29916c6ecc4aaeebc35c90e7df9, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.75

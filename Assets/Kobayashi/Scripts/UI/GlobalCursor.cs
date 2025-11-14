@@ -5,8 +5,12 @@ public class GlobalCursor : MonoBehaviour
 {
     public static GlobalCursor Instance { get; private set; }
 
-    [Header("カーソル画像")]
+    [Header("カーソル")]
     [SerializeField] private Image _cursorImage;
+
+    [Header("カーソル画像")]
+    [SerializeField,Tooltip("通常時")] private Sprite _cursorSprite;
+    [SerializeField, Tooltip("攻撃時")] private Sprite _attackSprite;
 
     [Header("オフセット")]
     [SerializeField] private Vector2 _offset = Vector2.zero;
@@ -26,6 +30,7 @@ public class GlobalCursor : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         Cursor.visible = false;
+        _cursorImage.sprite = _cursorSprite;
     }
     private void Start()
     {
@@ -47,5 +52,21 @@ public class GlobalCursor : MonoBehaviour
             out _canvasPos
         );
         _cursorImage.rectTransform.anchoredPosition = _canvasPos + _offset;
+    }
+    /// <summary>
+    /// 通常時のカーソル画像へ
+    /// </summary>
+    public void SetNormalCursor()
+    {
+        if (_cursorImage != null)
+            _cursorImage.sprite = _cursorSprite;
+    }
+    /// <summary>
+    /// HIT時の画像へ変換
+    /// </summary>
+    public void SetAttackCursor()
+    {
+        if (_cursorImage != null)
+            _cursorImage.sprite = _attackSprite;
     }
 }

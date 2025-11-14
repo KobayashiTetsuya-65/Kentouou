@@ -359,6 +359,7 @@ public class UIManager : MonoBehaviour
             {
                 _currentClick = 0;
                 GameManager.Instance.GamePhase = InGamePhase.Start;
+                GlobalCursor.Instance.SetNormalCursor();
                 return;
             }
             _RuleExplanationPanels[_currentClick].SetActive(true);

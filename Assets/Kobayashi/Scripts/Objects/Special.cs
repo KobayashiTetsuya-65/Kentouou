@@ -45,6 +45,13 @@ public class Special : MonoBehaviour,IPointerClickHandler
         seq.Append(_specialRectTr.DOScale(1.2f, 0.05f));
         seq.Append(_specialRectTr.DOScale(1f, 0.1f));
     }
+    private void OnDisable()
+    {
+        if (GlobalCursor.Instance != null)
+        {
+            GlobalCursor.Instance.SetNormalCursor();
+        }
+    }
     private void StartTimer()
     {
         _gauge.fillAmount = 1f;
