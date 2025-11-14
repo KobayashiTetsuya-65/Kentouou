@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
     }
 
     void Update()
@@ -186,6 +185,7 @@ public class GameManager : MonoBehaviour
             case SceneDivision.Result://リザルトシーンで実行したいこと
                 if (!_isPanel)
                 {
+                    AudioManager.Instance.StopBGM();
                     StartCoroutine(_uiManager.FinishInGame(PlayerWin));
                     _isPanel = true;
                 }

@@ -67,6 +67,7 @@ public class UIManager : MonoBehaviour
     [Tooltip("弱点タイマー"), SerializeField] private GameObject _weakTimerPrefab;
     [Tooltip("必殺ゲージ"), SerializeField] private GameObject _gaugePrefab;
     [Tooltip("必殺弱点"), SerializeField] private GameObject _specialWeakPointPrefab;
+    [SerializeField] private ParticleSystem _confetti;
 
     [Header("カウントダウンテキスト")]
     [SerializeField] private TextMeshProUGUI[] _countDownTexts;
@@ -88,6 +89,7 @@ public class UIManager : MonoBehaviour
             .OnComplete(() => _fadePanel.gameObject.SetActive(false));
         GameManager.Instance.SetScript();
         _currentClick = 0;
+        _confetti.gameObject.SetActive(false);
     }
     /// <summary>
     /// UIをリセット
@@ -308,8 +310,6 @@ public class UIManager : MonoBehaviour
             foreach(var loser in _enemyLoser)
             {
                 _enemyImage.sprite = loser;
-                if (loser == _enemyLoser[1])
-                    AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.WomanScream);
                 if (loser == _enemyLoser[2])
                     AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.FallDown);
                 yield return new WaitForSeconds(0.4f);
@@ -319,6 +319,8 @@ public class UIManager : MonoBehaviour
             {
                 _playerImage.sprite = winner;
                 yield return new WaitForSeconds(0.7f);
+                if(winner == _playerWinner[0])
+                    AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.WomanScream);
                 if (_special != null) Destroy(_special);
             }
         }
@@ -342,16 +344,28 @@ public class UIManager : MonoBehaviour
             }
         }
         if (_special != null) Destroy(_special);
-        yield return new WaitForSeconds(2);
-        InGamePanel(false);
-        if(playerWin == true)
-        {
-            _winPanel.gameObject.SetActive(true);
-        }
-        else
-        {
-            _losePanel.gameObject.SetActive(true);
-        }
+        _fadePanel.gameObject.SetActive(true);
+        _fadePanel.DOFade(1f, 1f)
+            .OnComplete(() =>
+            {
+                InGamePanel(false);
+                _fadePanel.gameObject.SetActive(true);
+                _fadePanel.DOFade(0f, 1f)
+                    .SetEase(Ease.Linear);
+                if (playerWin)
+                {
+                    _winPanel.gameObject.SetActive(true);
+                    PlayWinEffect();
+                    AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Cheers);
+                    AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.Win);
+                }
+                else
+                {
+                    _losePanel.gameObject.SetActive(true);
+                    AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Clap);
+                    AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.Lose);
+                }
+            });
     }
     /// <summary>
     /// ルール説明パネルの表示
@@ -372,5 +386,10 @@ public class UIManager : MonoBehaviour
             }
             _RuleExplanationPanels[_currentClick].SetActive(true);
         }
+    }
+    private void PlayWinEffect()
+    {
+        _confetti.gameObject.SetActive(true);
+        _confetti.Play();
     }
 }

@@ -22,12 +22,16 @@ public static class SoundDataUtility
             public static readonly string ManScream = "ManScream";
             public static readonly string WomanScream = "WomanScream";
             public static readonly string FallDown = "FallDown";
+            public static readonly string Clap = "Clap";
+            public static readonly string Cheers = "Cheers";
         }
 
         public static class Bgm
         {
             public static readonly string Title = "Title";
             public static readonly string InGame = "InGame";
+            public static readonly string Win = "Win";
+            public static readonly string Lose = "Lose";
         }
     }
 

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 /// <summary>
@@ -10,18 +11,19 @@ public class Player : MonoBehaviour
 
     [Header("HPゲージ")]
     [SerializeField] private Image[] _hps;
+
+    [Header("HPゲージの親オブジェクト")]
+    [SerializeField] private RectTransform _hpPanel;
     public int PlayerCurrentHP;
     
-    private void Start()
-    {
-        
-    }
     /// <summary>
     /// プレイヤーのステータスをリセット
     /// </summary>
     public void PlayerStateReset()
     {
         PlayerCurrentHP = PlayerMaxHP;
+        foreach (var hp in _hps)
+            hp.gameObject.SetActive(true);
     }
     /// <summary>
     /// プレイヤーがダメージを受ける
@@ -31,14 +33,18 @@ public class Player : MonoBehaviour
     {
         PlayerCurrentHP -= damage;
         Debug.Log($"{damage}ダメージを受けた！");
-        for(int i = 0; i < _hps.Length; i++)
+        for (int i = 0; i < _hps.Length; i++)
         {
-            _hps[i].gameObject.SetActive(false);
+            _hps[i].gameObject.SetActive(i < PlayerCurrentHP);
         }
-        for(int i = 0; i < PlayerCurrentHP; i++)
-        {
-            _hps[i].gameObject.SetActive(true);
-        }
+        _hpPanel.DOShakeAnchorPos(
+            0.3f,   // 揺れる時間
+            20f,    // 揺れの強さ
+            10,     // 揺れる回数
+            90f,    // ランダム性
+            false,  // フェイドアウト
+            true    // 相対モーション
+        );
     }
 
 }
