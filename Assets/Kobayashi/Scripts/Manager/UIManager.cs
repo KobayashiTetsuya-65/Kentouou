@@ -303,11 +303,15 @@ public class UIManager : MonoBehaviour
         //èIóπââèo
         yield return new WaitForSeconds(0.2f);
         if (_special != null) Destroy(_special);
-        if (playerWin == true)
+        if (playerWin)
         {
             foreach(var loser in _enemyLoser)
             {
                 _enemyImage.sprite = loser;
+                if (loser == _enemyLoser[1])
+                    AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.WomanScream);
+                if (loser == _enemyLoser[2])
+                    AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.FallDown);
                 yield return new WaitForSeconds(0.4f);
                 if (_special != null) Destroy(_special);
             }
@@ -323,6 +327,10 @@ public class UIManager : MonoBehaviour
             foreach (var loser in _playerLoser)
             {
                 _playerImage.sprite = loser;
+                if (loser == _playerLoser[1])
+                    AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.ManScream);
+                if (loser == _playerLoser[2])
+                    AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.FallDown);
                 yield return new WaitForSeconds(0.4f);
                 if (_special != null) Destroy(_special);
             }

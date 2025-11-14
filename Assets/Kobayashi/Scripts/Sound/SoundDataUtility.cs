@@ -19,6 +19,9 @@ public static class SoundDataUtility
             public static readonly string Special = "Special";
             public static readonly string Defence = "Defence";
             public static readonly string TurnThePage = "TurnThePage";
+            public static readonly string ManScream = "ManScream";
+            public static readonly string WomanScream = "WomanScream";
+            public static readonly string FallDown = "FallDown";
         }
 
         public static class Bgm
