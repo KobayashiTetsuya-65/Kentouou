@@ -103,3 +103,21 @@ MonoBehaviour:
     _playOnAwake: 0
     _volume: 1
     _clip: {fileID: 8300000, guid: fce59b4f1fca0da4998057edd70ebb7d, type: 3}
+  - _key: ManScream
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 0
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 82da4af940f2a32459f2ba03560f92d2, type: 3}
+  - _key: WomanScream
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 0
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 74a8df2c82595f144b5c776973474438, type: 3}
+  - _key: FallDown
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 0
+    _volume: 1
+    _clip: {fileID: 8300000, guid: dc6629acc336bf041b9a2072f76a48ed, type: 3}
