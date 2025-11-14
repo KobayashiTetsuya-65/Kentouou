@@ -15,8 +15,6 @@ public class SceneMoveButton : MonoBehaviour
     void Start()
     {
         _button.onClick.AddListener(SceneChange);
-        _image.color = new Color(0, 0, 0, 0);
-        _image.gameObject.SetActive(false);
         _push = false;
     }
     void SceneChange()

@@ -342,20 +342,27 @@ public class UIManager : MonoBehaviour
             }
         }
         if (_special != null) Destroy(_special);
-        yield return new WaitForSeconds(2);
-        InGamePanel(false);
-        if(playerWin)
-        {
-            _winPanel.gameObject.SetActive(true);
-            AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Cheers);
-            AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.Win);
-        }
-        else
-        {
-            _losePanel.gameObject.SetActive(true);
-            AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Clap);
-            AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.Lose);
-        }
+        _fadePanel.gameObject.SetActive(true);
+        _fadePanel.DOFade(1f, 1f)
+            .OnComplete(() =>
+            {
+                InGamePanel(false);
+                _fadePanel.gameObject.SetActive(true);
+                _fadePanel.DOFade(0f, 1f)
+                    .SetEase(Ease.Linear);
+                if (playerWin)
+                {
+                    _winPanel.gameObject.SetActive(true);
+                    AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Cheers);
+                    AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.Win);
+                }
+                else
+                {
+                    _losePanel.gameObject.SetActive(true);
+                    AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Clap);
+                    AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.Lose);
+                }
+            });
     }
     /// <summary>
     /// ルール説明パネルの表示
