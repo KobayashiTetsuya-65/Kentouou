@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4384697246342563637}
   - component: {fileID: 5942060418883872650}
   - component: {fileID: 379979182391972607}
+  - component: {fileID: 6788022491027977278}
   m_Layer: 5
   m_Name: SpecialWeakPoint
   m_TagString: Untagged
@@ -95,6 +96,18 @@ MonoBehaviour:
   _enemyRectTr: {fileID: 5668034945804021097, guid: 2778573ff7d11a941a21473e74e3e35d, type: 3}
   _duration: 7
   _damage: 4
+--- !u!114 &6788022491027977278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6205749160157608341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6048b0384e782e478c06e5a2f65ad95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorTrigger
 --- !u!1 &9011840090711331791
 GameObject:
   m_ObjectHideFlags: 0

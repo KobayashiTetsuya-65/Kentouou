@@ -191,4 +191,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GlobalCursor
   _cursorImage: {fileID: 1452683922940073281}
+  _cursorSprite: {fileID: 2669578622885705791, guid: 1687f3b51268b264d8d63acb1d17e687, type: 3}
+  _attackSprite: {fileID: 4957480281991491512, guid: e0be85bcf63979540a13e88f9eccc743, type: 3}
   _offset: {x: 0, y: 0}

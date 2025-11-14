@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
                             _enemy.EnemyStateReset();
                             _spcialCreate = false;
                             StartCoroutine(_uiManager.CountDown());
+                            GlobalCursor.Instance.SetNormalCursor();
                         }
                         break;
                     case InGamePhase.CountDown:

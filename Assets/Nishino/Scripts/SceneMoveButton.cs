@@ -32,4 +32,11 @@ public class SceneMoveButton : MonoBehaviour
             });
         _push = true;
     }
+    private void OnDisable()
+    {
+        if (GlobalCursor.Instance != null)
+        {
+            GlobalCursor.Instance.SetNormalCursor();
+        }
+    }
 }

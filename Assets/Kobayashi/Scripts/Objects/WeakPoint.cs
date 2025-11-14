@@ -18,6 +18,13 @@ public class WeakPoint : MonoBehaviour,IPointerClickHandler
         GameManager.Instance.Damage = damage;
         DestroyWeakPoint();
     }
+    private void OnDisable()
+    {
+        if (GlobalCursor.Instance != null)
+        {
+            GlobalCursor.Instance.SetNormalCursor();
+        }
+    }
     public void DestroyWeakPoint()
     {
         Destroy(gameObject);

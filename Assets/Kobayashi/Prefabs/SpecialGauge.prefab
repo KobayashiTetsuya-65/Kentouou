@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1930938281394419642}
   - component: {fileID: 3853750360106822909}
   - component: {fileID: 2960036742474387780}
+  - component: {fileID: 1067167907184943069}
   m_Layer: 5
   m_Name: GaugeForward
   m_TagString: Untagged
@@ -75,6 +76,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1067167907184943069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120373963462298059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6048b0384e782e478c06e5a2f65ad95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorTrigger
 --- !u!1 &864026114424179727
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,7 +143,6 @@ MonoBehaviour:
   _gaugeFront: {fileID: 120373963462298059}
   _alphaStart: 0.2
   _maxClick: 5
-  _duration: 0.5
   _timer: 10
   _minX: -750
   _maxX: 750

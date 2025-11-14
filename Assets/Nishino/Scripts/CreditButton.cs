@@ -15,6 +15,13 @@ public class CreditButton : MonoBehaviour
     {
         _button.onClick.AddListener(ShowConfigPanel);
     }
+    private void OnDisable()
+    {
+        if (GlobalCursor.Instance != null)
+        {
+            GlobalCursor.Instance.SetNormalCursor();
+        }
+    }
     void ShowConfigPanel()
     {
         AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Click);

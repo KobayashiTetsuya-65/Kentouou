@@ -75,6 +75,13 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
             }
         }
     }
+    private void OnDisable()
+    {
+        if (GlobalCursor.Instance != null)
+        {
+            GlobalCursor.Instance.SetNormalCursor();
+        }
+    }
     /// <summary>
     /// 必殺ゲージがたまった演出＆処理
     /// </summary>
