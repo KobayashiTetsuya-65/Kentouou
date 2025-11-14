@@ -2389,7 +2389,7 @@ MonoBehaviour:
   PlayerWin: 0
   _spcialCreate: 0
   Damage: 0
-  _parcent: 0.6
+  _parcent: 0.7
 --- !u!4 &1000714736
 Transform:
   m_ObjectHideFlags: 0
