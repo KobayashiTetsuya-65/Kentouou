@@ -67,6 +67,7 @@ public class UIManager : MonoBehaviour
     [Tooltip("弱点タイマー"), SerializeField] private GameObject _weakTimerPrefab;
     [Tooltip("必殺ゲージ"), SerializeField] private GameObject _gaugePrefab;
     [Tooltip("必殺弱点"), SerializeField] private GameObject _specialWeakPointPrefab;
+    [SerializeField] private ParticleSystem _confetti;
 
     [Header("カウントダウンテキスト")]
     [SerializeField] private TextMeshProUGUI[] _countDownTexts;
@@ -88,6 +89,7 @@ public class UIManager : MonoBehaviour
             .OnComplete(() => _fadePanel.gameObject.SetActive(false));
         GameManager.Instance.SetScript();
         _currentClick = 0;
+        _confetti.gameObject.SetActive(false);
     }
     /// <summary>
     /// UIをリセット
@@ -353,6 +355,7 @@ public class UIManager : MonoBehaviour
                 if (playerWin)
                 {
                     _winPanel.gameObject.SetActive(true);
+                    PlayWinEffect();
                     AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Cheers);
                     AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.Win);
                 }
@@ -383,5 +386,10 @@ public class UIManager : MonoBehaviour
             }
             _RuleExplanationPanels[_currentClick].SetActive(true);
         }
+    }
+    private void PlayWinEffect()
+    {
+        _confetti.gameObject.SetActive(true);
+        _confetti.Play();
     }
 }
