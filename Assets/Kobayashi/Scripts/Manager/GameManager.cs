@@ -188,6 +188,7 @@ public class GameManager : MonoBehaviour
                     AudioManager.Instance.StopBGM();
                     StartCoroutine(_uiManager.FinishInGame(PlayerWin));
                     _isPanel = true;
+                    _changeBGM = false;
                 }
             break;
         }
@@ -201,7 +202,6 @@ public class GameManager : MonoBehaviour
         GamePhase = InGamePhase.Explanation;
         _special = false;
         _isPanel = false;
-        _changeBGM = false;
         PlayerWin = false;
         _titleBGM = false;
         Miss = false;
