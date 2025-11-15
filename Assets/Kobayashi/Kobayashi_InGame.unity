@@ -617,9 +617,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneMoveButton
   _button: {fileID: 34041710}
   _image: {fileID: 1517194807}
-  _duration: 0.5
+  _duration: 3
   _sceneName: Title
   _moveScene: 0
+  _ps: {fileID: 2008956881}
 --- !u!114 &34041714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6153,6 +6154,7 @@ MonoBehaviour:
   _duration: 0.5
   _sceneName: Title
   _moveScene: 0
+  _ps: {fileID: 0}
 --- !u!114 &1511885902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9411,7 +9413,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 10, y: 0.1, z: 0.1}
+    m_Scale: {x: 8, y: 0.1, z: 0.1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
