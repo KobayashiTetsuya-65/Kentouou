@@ -10,6 +10,7 @@ public class SceneMoveButton : MonoBehaviour
     [SerializeField] private float _duration = 0.5f;
     [SerializeField] private string _sceneName;
     [SerializeField] private SceneDivision _moveScene;
+    [SerializeField] private ParticleSystem _ps;
     private bool _push;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,6 +23,11 @@ public class SceneMoveButton : MonoBehaviour
         if (_push)return;
         AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Click);
         _image.gameObject.SetActive(true);
+        if (_ps != null)
+        {
+            ParticleSystem.MainModule main = _ps.main;
+            main.startColor = new Color(1, 1, 1, 0);
+        }
         _image.DOFade(1f, _duration)
             .OnComplete(() =>
             {
