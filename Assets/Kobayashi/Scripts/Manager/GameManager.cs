@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
                         {
                             AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.InGame);
                             _changeBGM = true;
-                            Debug.LogError("a");
                         }
                         if (Input.GetMouseButtonDown(0))
                         {

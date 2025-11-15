@@ -28,6 +28,5 @@ public class WeakPoint : MonoBehaviour,IPointerClickHandler
     public void DestroyWeakPoint()
     {
         Destroy(gameObject);
-        Debug.Log("é„ì_Ç™è¡Ç¶ÇΩÅI");
     }
 }

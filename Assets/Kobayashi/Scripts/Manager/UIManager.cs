@@ -6,6 +6,7 @@ using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
+    #region Serialize
     [Header("HPゲージ")]
     [Tooltip("プレイヤーHPゲージ"), SerializeField] private GameObject _playerHP;
     [Tooltip("エネミーHPゲージ"), SerializeField] private GameObject _enemyHP;
@@ -73,6 +74,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] _countDownTexts;
 
     [SerializeField]private Canvas _canvas;
+    #endregion
     private HPBarController _HPBarE;
     private Player _player;
     private RectTransform _weakRect,_weakTimerRect;
@@ -91,6 +93,7 @@ public class UIManager : MonoBehaviour
         _currentClick = 0;
         _confetti.gameObject.SetActive(false);
     }
+    #region メソッド
     /// <summary>
     /// UIをリセット
     /// </summary>
@@ -230,6 +233,10 @@ public class UIManager : MonoBehaviour
         _enemyRectTr.anchoredPosition = enemyRect.anchoredPosition;
         GameManager.Instance._coroutine = null;
     }
+    /// <summary>
+    /// 防御成功時のモーション
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator DefenceMotion()
     {
         int n = Random.Range(0, 2);
@@ -256,7 +263,6 @@ public class UIManager : MonoBehaviour
             _special.transform.SetParent(_canvas.transform, false);
             SpecialGaugePanel(true);
         }
-        Debug.Log("必殺ゲージ出現！！");
     }
     /// <summary>
     /// 必殺技縦型ゲージの表示
@@ -392,4 +398,5 @@ public class UIManager : MonoBehaviour
         _confetti.gameObject.SetActive(true);
         _confetti.Play();
     }
+    #endregion
 }
