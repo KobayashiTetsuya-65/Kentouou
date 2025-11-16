@@ -125,11 +125,11 @@ public class SpecialGauge : MonoBehaviour,IPointerClickHandler
     /// <returns></returns>
     private IEnumerator BreakTimer()
     {
-        yield return new WaitForSeconds(_timer / 2);
+        yield return new WaitForSeconds(_timer * 0.5f);
         if(!_isAction)StartCoroutine(FlashingChange(0.3f));
-        yield return new WaitForSeconds(_timer / 4);
+        yield return new WaitForSeconds(_timer * 0.25f);
         if (!_isAction)StartCoroutine(FlashingChange(0.15f));
-        yield return new WaitForSeconds(_timer / 4);
+        yield return new WaitForSeconds(_timer * 0.25f);
         if (!_isAction)
         {
             _frontImage.DOFade(0f, 0.2f);
