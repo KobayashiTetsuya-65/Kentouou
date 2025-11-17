@@ -1,7 +1,8 @@
+using DG.Tweening;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
-using Unity.VisualScripting;
 
 public class SpecialGaugeVertical : MonoBehaviour
 {
@@ -9,10 +10,13 @@ public class SpecialGaugeVertical : MonoBehaviour
     [SerializeField] private Image _fillImage;
     [SerializeField] private float _duration = 0.5f;
     [SerializeField] private float _specialTime = 7f;
+    [SerializeField] private float _timer = 10f;
     private float _currentAmount = 0,_hue = 0,_brightness = 1f;
     private Tween _fillTween,_blinkTween, _rainbowTween, _brightnessTween;
     private Color _purple;
-     private void Start()
+    private bool _phaseIsChose => GameManager.Instance.GamePhase == InGamePhase.Chose;
+    private Sequence _seq;
+    private void Start()
     {
         _fillImage.fillAmount = 0;
         _purple = new Color(1f, 0f, 1f, 1f);
@@ -23,9 +27,12 @@ public class SpecialGaugeVertical : MonoBehaviour
         _fillImage.fillAmount = 0f;
         _currentAmount = 0;
         _fillImage.rectTransform.localScale = Vector3.one * 0.2f;
+        _img.DOFade(1f, 0.1f);
+        _fillImage.DOFade(1f, 0.1f);
         _fillImage.rectTransform.DOScale(1.2f, 0.2f)
             .SetEase(Ease.Linear)
             .OnComplete(() => _fillImage.rectTransform.DOScale(1f, 1f));
+        StartCoroutine(GaugeVertialTimer());
     }
     /// <summary>
     /// FillAmountを変換
@@ -67,8 +74,8 @@ public class SpecialGaugeVertical : MonoBehaviour
                     _blinkTween.Kill();
                 }
                 _fillImage.color = _purple;
-            }));
-        
+            })
+        );
     }
     /// <summary>
     /// 点滅アニメーション開始
@@ -130,5 +137,73 @@ public class SpecialGaugeVertical : MonoBehaviour
         _brightnessTween?.Kill();
         _fillImage.color = _purple;
         _img.color = Color.white;
+    }
+    private IEnumerator GaugeVertialTimer()
+    {
+        if (_seq != null && _seq.IsActive()) _seq.Kill();
+        yield return new WaitForSeconds(_timer * 0.8f);
+
+        if (!_phaseIsChose)
+        {
+            RestoreImages();
+            yield break;
+        }
+        _seq = DOTween.Sequence();
+        _seq.AppendCallback(() =>
+        {
+            if (GameManager.Instance.GamePhase != InGamePhase.Chose)
+            {
+                CancelSequence();
+            }
+        });
+
+        _seq.Append(_img.DOFade(0.15f, _timer * 0.05f).SetEase(Ease.Linear));
+        _seq.Join(_fillImage.DOFade(0.15f, _timer * 0.05f).SetEase(Ease.Linear));
+        _seq.AppendCallback(CheckPhaseOrCancel);
+
+        _seq.Append(_img.DOFade(0.1f, _timer * 0.05f).SetEase(Ease.Linear));
+        _seq.Join(_fillImage.DOFade(0.1f, _timer * 0.05f).SetEase(Ease.Linear));
+        _seq.AppendCallback(CheckPhaseOrCancel);
+
+        _seq.Append(_img.DOFade(0.05f, _timer * 0.05f).SetEase(Ease.Linear));
+        _seq.Join(_fillImage.DOFade(0.05f, _timer * 0.05f).SetEase(Ease.Linear));
+        _seq.AppendCallback(CheckPhaseOrCancel);
+
+        _seq.Append(_img.DOFade(0f, _timer * 0.05f).SetEase(Ease.Linear));
+        _seq.Join(_fillImage.DOFade(0f, _timer * 0.05f).SetEase(Ease.Linear));
+        _seq.AppendCallback(CheckPhaseOrCancel);
+
+        _seq.OnComplete(() =>
+        {
+            if (GameManager.Instance.GamePhase == InGamePhase.Chose)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                RestoreImages();
+            }
+        });
+    }
+
+    private void CheckPhaseOrCancel()
+    {
+        if (GameManager.Instance.GamePhase != InGamePhase.Chose)
+        {
+            CancelSequence();
+        }
+    }
+    private void CancelSequence()
+    {
+        if (_seq != null && _seq.IsActive())
+        {
+            _seq.Kill();
+        }
+        RestoreImages();
+    }
+    private void RestoreImages()
+    {
+        _img.DOFade(1f, 0.1f);
+        _fillImage.DOFade(1f, 0.1f);
     }
 }
