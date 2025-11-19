@@ -53,7 +53,7 @@ MonoBehaviour:
     _type: 1
     _isLoop: 0
     _playOnAwake: 0
-    _volume: 1
+    _volume: 0.8
     _clip: {fileID: 8300000, guid: 4fab3b5ff8ccb36438e4f72c8f76cca9, type: 3}
   - _key: Biribiri
     _type: 1

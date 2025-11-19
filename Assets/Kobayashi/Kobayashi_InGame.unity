@@ -7868,7 +7868,7 @@ MonoBehaviour:
   _healthyColor: {r: 0, g: 1, b: 0, a: 1}
   _warningColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   _dangerColor: {r: 1, g: 0, b: 0, a: 1}
-  _maxHP: 700
+  _maxHP: 800
   _delayDuration: 4
   _fadeDuration: 0.4
 --- !u!114 &1838189659
@@ -7883,7 +7883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f40e605ede883b4b90559afcb59b69b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  EnemyMaxHP: 700
+  EnemyMaxHP: 800
   _hp: {fileID: 1838189656}
   EnemyCurrentHP: 0
 --- !u!1 &1846060221
